@@ -15,44 +15,22 @@
         @Html.HiddenFor(model => model.Id)
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
+            @Html.LabelFor(model => model.Value)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name)
+            @Html.EditorFor(model => model.Value)
+            @Html.ValidationMessageFor(model => model.Value)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Section)
+       <div class="editor-label">
+            @Html.LabelFor(model => model.Type)
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.SectionId,ViewBag.SectionSelect as SelectList)
-            @Html.ValidationMessageFor(model => model.Section)
+            @Html.DropDownListFor(model => model.TypeId, ViewBag.SectionSelect as SelectList)
+            @Html.ValidationMessageFor(model => model.Type)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Required)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Required)
-            @Html.ValidationMessageFor(model => model.Required)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.RequiredText)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.RequiredText)
-            @Html.ValidationMessageFor(model => model.RequiredText)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Order)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Order)
-            @Html.ValidationMessageFor(model => model.Order)
-        </div>
+       
 
         <p>
             <input type="submit" value="Save" />

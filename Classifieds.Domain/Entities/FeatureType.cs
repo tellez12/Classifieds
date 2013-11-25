@@ -14,7 +14,7 @@ namespace Classifieds.Domain.Entities
         public string Name { get; set; }
         public bool Required { get; set; }
         public string RequiredText { get; set; }
-        public FeaturesTypeEnum Type { get; set; }
+        public ControlType ControlType { get; set; }
         public int Order { get; set; }
         public int SectionId { get; set; }
         [ForeignKey("SectionId")]

@@ -28,6 +28,14 @@
             @Html.DropDownListFor(model => model.SectionId, ViewBag.SectionSelect as SelectList)
             @Html.ValidationMessageFor(model => model.Section)
         </div>
+         <div class="editor-label">
+            @Html.LabelFor(model => model.ControlType)
+        </div>
+
+        <div class="editor-field">
+            @Html.DropDownList("TypeDD",ViewBag.TypeEnumSelect as SelectList)
+            @Html.ValidationMessageFor(model => model.ControlType)
+        </div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Required)

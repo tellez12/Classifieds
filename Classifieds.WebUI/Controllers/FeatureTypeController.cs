@@ -9,6 +9,7 @@ using Classifieds.Domain.Entities;
 using Classifieds.Domain.EF;
 using Classifieds.Domain.Abstract;
 using Classifieds.WebUI.ViewModels.Shared;
+using Classifieds.Domain.Utils;
 
 namespace Classifieds.WebUI.Controllers
 {
@@ -56,6 +57,9 @@ namespace Classifieds.WebUI.Controllers
         public ActionResult Create()
         {
             ViewBag.SectionSelect = new SelectList(sectionRepository.GetSections.ToList(), "Id", "Name");
+            ViewBag.TypeEnumSelect = from ControlType s in Enum.GetValues(typeof(ControlType))
+                                     select new { ID = (int)s, Name = s.ToString() };
+            ViewData["TypeDD"] = new SelectList(ViewBag.TypeEnumSelect, "ID", "Name");
             return View();
         }
 
@@ -63,11 +67,11 @@ namespace Classifieds.WebUI.Controllers
         // POST: /FeatureType/Create
 
         [HttpPost]
-        public ActionResult Create(FeatureType FeatureType)
+        public ActionResult Create(FeatureType FeatureType, ControlType TypeDD )
         {
             if (ModelState.IsValid)
             {
-
+                FeatureType.ControlType = TypeDD;
                 repository.Create(FeatureType);
                 return RedirectToAction("Index");
             }
@@ -86,6 +90,12 @@ namespace Classifieds.WebUI.Controllers
                 return HttpNotFound();
             }
             ViewBag.SectionSelect = new SelectList(sectionRepository.GetSections.ToList(), "Id", "Name");
+            var EnumList = from ControlType s in Enum.GetValues(typeof(ControlType))
+                                     select new { ID = (int)s, Name = s.ToString() } ;
+            SelectList typeList = new SelectList(EnumList, "ID", "Name", FeatureType.ControlType);
+          
+           
+            ViewData["TypeDD"] = typeList;
 
             return View(FeatureType);
         }
@@ -94,11 +104,11 @@ namespace Classifieds.WebUI.Controllers
         // POST: /FeatureType/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(FeatureType FeatureType)
+        public ActionResult Edit(FeatureType FeatureType, ControlType TypeDD)
         {
             if (ModelState.IsValid)
             {
-
+                FeatureType.ControlType = TypeDD;
                 repository.Edit(FeatureType);
                 return RedirectToAction("Index");
             }

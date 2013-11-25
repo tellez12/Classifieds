@@ -22,6 +22,7 @@ namespace Classifieds.Domain.EF
         public DbSet<FeatureType> FeatureTypes { get; set; }
         public DbSet<FeatureTypeValue> FeatureTypeValues { get; set; }
         public DbSet<Item> Items { get; set; }
+
         public DbSet<Section> Sections { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<Picture> Pictures { get; set; }

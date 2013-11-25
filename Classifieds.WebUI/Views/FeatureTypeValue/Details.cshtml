@@ -9,40 +9,20 @@
 <fieldset>
     <legend>FeaturesType</legend>
 
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Name)
+     <div class="display-label">
+        @Html.DisplayNameFor(model => model.Type)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Name)
+        @Html.DisplayFor(model => model.Type.Name)
     </div>
 
     <div class="display-label">
-        @Html.DisplayNameFor(model => model.Section.Name)
+        @Html.DisplayNameFor(model => model.Value)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Section.Name)
-    </div>
+        @Html.DisplayFor(model => model.Value)
+    </div>   
 
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Required)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Required)
-    </div>
-
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.RequiredText)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.RequiredText)
-    </div>
-
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Order)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Order)
-    </div>
 </fieldset>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |

@@ -1,16 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Classifieds.Domain.Utils
 {
-    public enum FeaturesTypeEnum
-    {   t_bool = 0,
-        t_int =1,
-        t_float =2,
-        t_text =3,
-        t_multiText =4 
+    public enum ControlType
+    {   CheckBox = 0,
+        TextBoxInt =1,
+        TextBoxReal =2,
+        TextBox =3,
+        DropDown =4 
+    }
+
+    public static class ControlTypeExtensions
+    {
+        public static string ToDescriptionString(this ControlType val)
+        {
+            DescriptionAttribute[] attributes = (DescriptionAttribute[])val.GetType().GetField(val.ToString()).GetCustomAttributes(typeof(DescriptionAttribute), false);
+            return attributes.Length > 0 ? attributes[0].Description : string.Empty;
+        }
     }
 }

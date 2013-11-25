@@ -9,34 +9,22 @@
 <h3>Are you sure you want to delete this?</h3>
 <fieldset>
     <legend>FeaturesType</legend>
-
+    
     <div class="display-label">
-        @Html.DisplayNameFor(model => model.Name)
+        @Html.DisplayNameFor(model => model.Type)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Name)
-    </div>
-
+        @Html.DisplayFor(model => model.Type.Name)
 
     <div class="display-label">
-        @Html.DisplayNameFor(model => model.Required)
+        @Html.DisplayNameFor(model => model.Value)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Required)
+        @Html.DisplayFor(model => model.Value)
     </div>
 
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.RequiredText)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.RequiredText)
-    </div>
 
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Order)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Order)
+
     </div>
 </fieldset>
 @using (Html.BeginForm())

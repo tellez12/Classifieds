@@ -1,0 +1,68 @@
+﻿@model Classifieds.Domain.Entities.Item
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Item</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Comment)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Comment)
+            @Html.ValidationMessageFor(model => model.Comment)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Price)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Price)
+            @Html.ValidationMessageFor(model => model.Price)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PublishDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PublishDate)
+            @Html.ValidationMessageFor(model => model.PublishDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastUpdateDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastUpdateDate)
+            @Html.ValidationMessageFor(model => model.LastUpdateDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AdquiredDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AdquiredDate)
+            @Html.ValidationMessageFor(model => model.AdquiredDate)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

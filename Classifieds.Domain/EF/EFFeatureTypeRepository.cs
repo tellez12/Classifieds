@@ -17,7 +17,7 @@ namespace Classifieds.Domain.EF
         {
             get { return db.FeatureTypes.Include("Section"); }
         }
-
+     
         public FeatureType GetFeatureType(int id)
         {
             return db.FeatureTypes.Find(id);

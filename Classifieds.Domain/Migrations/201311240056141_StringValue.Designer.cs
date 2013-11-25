@@ -5,13 +5,13 @@ namespace Classifieds.Domain.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    public sealed partial class other : IMigrationMetadata
+    public sealed partial class StringValue : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(other));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(StringValue));
         
         string IMigrationMetadata.Id
         {
-            get { return "201308270340549_other"; }
+            get { return "201311240056141_StringValue"; }
         }
         
         string IMigrationMetadata.Source
