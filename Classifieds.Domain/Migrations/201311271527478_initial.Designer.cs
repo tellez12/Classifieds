@@ -5,13 +5,13 @@ namespace Classifieds.Domain.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    public sealed partial class RenameTypeToControlType : IMigrationMetadata
+    public sealed partial class initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(RenameTypeToControlType));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201311241856361_RenameTypeToControlType"; }
+            get { return "201311271527478_initial"; }
         }
         
         string IMigrationMetadata.Source

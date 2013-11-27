@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Classifieds.Domain.Abstract;
 using Classifieds.Domain.Entities;
 using Classifieds.Domain.Utils;
@@ -12,7 +9,6 @@ namespace Classifieds.Domain.EF
 {
     public class EFItemRepository : EFBaseRepository, IItemRepository
     {
-
         public IQueryable<Item> GetItems
         {
             get { return db.Items; }
@@ -30,14 +26,11 @@ namespace Classifieds.Domain.EF
                 db.Items.Add(Item);
                 db.SaveChanges();
                 return new Message();
-
             }
             catch (Exception e)
             {
-
                 return new Message(e, string.Format("Error Creating", Item.GetType()));
             }
-
         }
 
         public Message Update(Item Item)
@@ -50,7 +43,6 @@ namespace Classifieds.Domain.EF
             }
             catch (Exception e)
             {
-
                 return new Message(e, string.Format("Error Editing ", Item.GetType()));
             }
         }
@@ -60,17 +52,15 @@ namespace Classifieds.Domain.EF
             Item Item = GetItem(id);
             try
             {
-
                 db.Items.Remove(Item);
                 db.SaveChanges();
 
                 return new Message();
             }
-            catch (Exception e)            {
-
+            catch (Exception e)
+            {
                 return new Message(e, string.Format("Error Deleting", Item.GetType()));
             }
         }
-
     }
 }

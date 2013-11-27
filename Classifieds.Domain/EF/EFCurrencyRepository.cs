@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Classifieds.Domain.Abstract;
 using Classifieds.Domain.Entities;
 using Classifieds.Domain.Utils;
@@ -12,7 +9,6 @@ namespace Classifieds.Domain.EF
 {
     public class EFCurrencyRepository : EFBaseRepository, ICurrencyRepository
     {
-
         public IQueryable<Currency> GetCurrencies
         {
             get { return db.Currencies; }
@@ -30,14 +26,11 @@ namespace Classifieds.Domain.EF
                 db.Currencies.Add(Currency);
                 db.SaveChanges();
                 return new Message();
-
             }
             catch (Exception e)
             {
-
                 return new Message(e, string.Format("Error Creating", Currency.GetType()));
             }
-
         }
 
         public Message Edit(Currency Currency)
@@ -50,7 +43,6 @@ namespace Classifieds.Domain.EF
             }
             catch (Exception e)
             {
-
                 return new Message(e, string.Format("Error Editing ", Currency.GetType()));
             }
         }
@@ -60,17 +52,15 @@ namespace Classifieds.Domain.EF
             Currency Currency = GetCurrency(id);
             try
             {
-
                 db.Currencies.Remove(Currency);
                 db.SaveChanges();
 
                 return new Message();
             }
-            catch (Exception e)            {
-
+            catch (Exception e)
+            {
                 return new Message(e, string.Format("Error Deleting", Currency.GetType()));
             }
         }
-
     }
 }

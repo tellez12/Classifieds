@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Classifieds.Domain.Utils
 {
     public enum ControlType
-    {   CheckBox = 0,
-        TextBoxInt =1,
-        TextBoxReal =2,
-        TextBox =3,
-        DropDown =4 
+    {
+        CheckBox = 0,
+        TextBoxInt = 1,
+        TextBoxReal = 2,
+        TextBox = 3,
+        DropDown = 4
     }
 
     public static class ControlTypeExtensions

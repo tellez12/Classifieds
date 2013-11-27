@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Classifieds.Domain.EF;
+using Classifieds.Domain.Entities;
+using Classifieds.WebUI.Filters;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
-using Classifieds.WebUI.Filters;
-using Classifieds.Domain.EF;
-using Classifieds.Domain.Entities;
 
 namespace Classifieds.WebUI.Controllers
 {
@@ -330,6 +329,7 @@ namespace Classifieds.WebUI.Controllers
         }
 
         #region Helpers
+
         private ActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
@@ -358,6 +358,7 @@ namespace Classifieds.WebUI.Controllers
             }
 
             public string Provider { get; private set; }
+
             public string ReturnUrl { get; private set; }
 
             public override void ExecuteResult(ControllerContext context)
@@ -403,6 +404,7 @@ namespace Classifieds.WebUI.Controllers
                     return "An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
             }
         }
-        #endregion
+
+        #endregion Helpers
     }
 }

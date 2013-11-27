@@ -70,21 +70,13 @@
     <Compile Include="Entities\Item.cs" />
     <Compile Include="Entities\Picture.cs" />
     <Compile Include="Entities\Section.cs" />
-    <Compile Include="Migrations\201311232348440_initial.cs" />
-    <Compile Include="Migrations\201311232348440_initial.Designer.cs">
-      <DependentUpon>201311232348440_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201311271525136_InitialCreate.cs" />
+    <Compile Include="Migrations\201311271525136_InitialCreate.Designer.cs">
+      <DependentUpon>201311271525136_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201311240056141_StringValue.cs" />
-    <Compile Include="Migrations\201311240056141_StringValue.Designer.cs">
-      <DependentUpon>201311240056141_StringValue.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201311240057470_AddFeatureTypeValue.cs" />
-    <Compile Include="Migrations\201311240057470_AddFeatureTypeValue.Designer.cs">
-      <DependentUpon>201311240057470_AddFeatureTypeValue.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201311241856361_RenameTypeToControlType.cs" />
-    <Compile Include="Migrations\201311241856361_RenameTypeToControlType.Designer.cs">
-      <DependentUpon>201311241856361_RenameTypeToControlType.cs</DependentUpon>
+    <Compile Include="Migrations\201311271527478_initial.cs" />
+    <Compile Include="Migrations\201311271527478_initial.Designer.cs">
+      <DependentUpon>201311271527478_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -99,17 +91,11 @@
     <Folder Include="DataBase\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201311232348440_initial.resx">
-      <DependentUpon>201311232348440_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201311271525136_InitialCreate.resx">
+      <DependentUpon>201311271525136_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201311240056141_StringValue.resx">
-      <DependentUpon>201311240056141_StringValue.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201311240057470_AddFeatureTypeValue.resx">
-      <DependentUpon>201311240057470_AddFeatureTypeValue.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201311241856361_RenameTypeToControlType.resx">
-      <DependentUpon>201311241856361_RenameTypeToControlType.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201311271527478_initial.resx">
+      <DependentUpon>201311271527478_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Classifieds.Domain.Entities;
-using Classifieds.Domain.EF;
 using Classifieds.Domain.Abstract;
+using Classifieds.Domain.Entities;
 using Classifieds.WebUI.ViewModels.Shared;
 
 namespace Classifieds.WebUI.Controllers
@@ -19,8 +14,8 @@ namespace Classifieds.WebUI.Controllers
 
         public FeatureTypeValueController(IFeatureTypeValueRepository MyRepository)
         {
-            this.repository = MyRepository; 
-        } 
+            this.repository = MyRepository;
+        }
 
         //
         // GET: /FeatureTypeValue/
@@ -64,7 +59,6 @@ namespace Classifieds.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 repository.Create(FeatureTypeValue);
                 return RedirectToAction("Index");
             }
@@ -82,7 +76,7 @@ namespace Classifieds.WebUI.Controllers
             {
                 return HttpNotFound();
             }
-           
+
             return View(FeatureTypeValue);
         }
 
@@ -94,11 +88,10 @@ namespace Classifieds.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 repository.Edit(FeatureTypeValue);
                 return RedirectToAction("Index");
             }
-          
+
             return View(FeatureTypeValue);
         }
 
@@ -128,7 +121,7 @@ namespace Classifieds.WebUI.Controllers
 
         protected override void Dispose(bool disposing)
         {
-           // repository.Dispose(disposing);
+            // repository.Dispose(disposing);
             base.Dispose(disposing);
         }
     }

@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Classifieds.Domain", "Class
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Classifieds.WebUI", "Classifieds.WebUI\Classifieds.WebUI.csproj", "{004220FB-DFED-459C-8005-282E0321011F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Classifieds.UnitTesting", "Classifieds.UnitTesting\Classifieds.UnitTesting.csproj", "{620659B9-3152-4773-8E6B-5266625B0B56}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{004220FB-DFED-459C-8005-282E0321011F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{004220FB-DFED-459C-8005-282E0321011F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{004220FB-DFED-459C-8005-282E0321011F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{620659B9-3152-4773-8E6B-5266625B0B56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{620659B9-3152-4773-8E6B-5266625B0B56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{620659B9-3152-4773-8E6B-5266625B0B56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{620659B9-3152-4773-8E6B-5266625B0B56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

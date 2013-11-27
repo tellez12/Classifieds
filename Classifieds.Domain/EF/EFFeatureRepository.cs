@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Classifieds.Domain.Abstract;
 using Classifieds.Domain.Entities;
 using Classifieds.Domain.Utils;
@@ -12,7 +9,6 @@ namespace Classifieds.Domain.EF
 {
     public class EFFeatureRepository : EFBaseRepository, IFeatureRepository
     {
-
         public IQueryable<Feature> GetFeatures
         {
             get { return db.Features; }
@@ -30,14 +26,11 @@ namespace Classifieds.Domain.EF
                 db.Features.Add(Feature);
                 db.SaveChanges();
                 return new Message();
-
             }
             catch (Exception e)
             {
-
                 return new Message(e, string.Format("Error Creating", Feature.GetType()));
             }
-
         }
 
         public Message Update(Feature Feature)
@@ -50,7 +43,6 @@ namespace Classifieds.Domain.EF
             }
             catch (Exception e)
             {
-
                 return new Message(e, string.Format("Error Editing ", Feature.GetType()));
             }
         }
@@ -60,17 +52,15 @@ namespace Classifieds.Domain.EF
             Feature Feature = GetFeature(id);
             try
             {
-
                 db.Features.Remove(Feature);
                 db.SaveChanges();
 
                 return new Message();
             }
-            catch (Exception e)            {
-
+            catch (Exception e)
+            {
                 return new Message(e, string.Format("Error Deleting", Feature.GetType()));
             }
         }
-
     }
 }
