@@ -2,7 +2,7 @@ namespace Classifieds.Domain.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class InitialCreate : DbMigration
     {
         public override void Up()
@@ -16,7 +16,7 @@ namespace Classifieds.Domain.Migrations
                         ExchangeRate = c.Decimal(nullable: false, precision: 18, scale: 2),
                     })
                 .PrimaryKey(t => t.Id);
-            
+
             CreateTable(
                 "dbo.Features",
                 c => new
@@ -34,7 +34,7 @@ namespace Classifieds.Domain.Migrations
                 .Index(t => t.FeatureType_Id)
                 .Index(t => t.Value_Id)
                 .Index(t => t.Item_Id);
-            
+
             CreateTable(
                 "dbo.FeatureTypes",
                 c => new
@@ -50,7 +50,7 @@ namespace Classifieds.Domain.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Sections", t => t.SectionId, cascadeDelete: true)
                 .Index(t => t.SectionId);
-            
+
             CreateTable(
                 "dbo.Sections",
                 c => new
@@ -60,7 +60,7 @@ namespace Classifieds.Domain.Migrations
                         Order = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
-            
+
             CreateTable(
                 "dbo.FeatureTypeValues",
                 c => new
@@ -72,7 +72,7 @@ namespace Classifieds.Domain.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.FeatureTypes", t => t.TypeId, cascadeDelete: true)
                 .Index(t => t.TypeId);
-            
+
             CreateTable(
                 "dbo.Items",
                 c => new
@@ -88,7 +88,7 @@ namespace Classifieds.Domain.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Currencies", t => t.Currency_Id)
                 .Index(t => t.Currency_Id);
-            
+
             CreateTable(
                 "dbo.Pictures",
                 c => new
@@ -100,7 +100,7 @@ namespace Classifieds.Domain.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Items", t => t.ItemId, cascadeDelete: true)
                 .Index(t => t.ItemId);
-            
+
             CreateTable(
                 "dbo.UserProfile",
                 c => new
@@ -109,9 +109,8 @@ namespace Classifieds.Domain.Migrations
                         UserName = c.String(),
                     })
                 .PrimaryKey(t => t.UserId);
-            
         }
-        
+
         public override void Down()
         {
             DropIndex("dbo.Pictures", new[] { "ItemId" });
