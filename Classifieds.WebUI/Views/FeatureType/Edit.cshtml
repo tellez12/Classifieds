@@ -34,9 +34,9 @@
         </div>
 
         <div class="editor-field">
-@*            @Html.DropDownList("TypeDD",ViewBag.TypeEnumSelect as SelectList)
-            @Html.ValidationMessageFor(model => model.ControlType)*@
-              @Html.DropDownListFor(model => model.ControlType,ViewBag.TypeEnumSelect as SelectList)
+            @Html.DropDownList("TypeDD",ViewBag.TypeEnumSelect as SelectList)
+            @Html.ValidationMessageFor(model => model.ControlType)
+@*              @Html.DropDownListFor(model => model.ControlType,ViewBag.TypeEnumSelect as SelectList)*@
         </div>
 
         <div class="editor-label">

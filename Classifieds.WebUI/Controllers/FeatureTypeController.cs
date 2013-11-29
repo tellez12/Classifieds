@@ -87,6 +87,7 @@ namespace Classifieds.WebUI.Controllers
             ViewBag.SectionSelect = new SelectList(sectionRepository.GetSections.ToList(), "Id", "Name");
             var EnumList = from ControlType s in Enum.GetValues(typeof(ControlType))
                            select new { ID = (int)s, Name = s.ToString() };
+
             SelectList typeList = new SelectList(EnumList, "ID", "Name", FeatureType.ControlType);
 
             ViewData["TypeDD"] = typeList;
