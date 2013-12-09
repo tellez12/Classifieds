@@ -21,7 +21,7 @@
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
         </div>
-        
+
         <div class="editor-label">
             @Html.LabelFor(model => model.Section)
         </div>
@@ -29,12 +29,12 @@
             @Html.DropDownListFor(model => model.SectionId, ViewBag.SectionSelect as SelectList)
             @Html.ValidationMessageFor(model => model.Section)
         </div>
-         <div class="editor-label">
+        <div class="editor-label">
             @Html.LabelFor(model => model.ControlType)
         </div>
 
         <div class="editor-field">
-            @Html.DropDownList("TypeDD",ViewBag.TypeEnumSelect as SelectList)
+            @Html.DropDownList("TypeDD", ViewBag.TypeEnumSelect as SelectList)
             @Html.ValidationMessageFor(model => model.ControlType)
         </div>
 
@@ -61,21 +61,23 @@
             @Html.EditorFor(model => model.Order)
             @Html.ValidationMessageFor(model => model.Order)
         </div>
-        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ItemTypes)
+        </div>
         <div class="editor-field">
-    <ul>
-        @foreach (ItemType itemType in ViewBag.PossibleTeachers)
-        {
-            <li>                        
-              
-                   <input type="checkbox" name="ItemTypes" value="@itemType.Id" />
-                
-                @itemType.Name
-            </li>
-        }
-        @Html.ValidationMessageFor(model => model.ItemTypes)
-    </ul>
-</div>
+            <ul>
+                @foreach (ItemType itemType in ViewBag.ItemTypeList)
+                {
+                    <li>
+
+                        <input type="checkbox" name="ItemTypes" value="@itemType.Id" />
+
+                        @itemType.Name
+                    </li>
+                }
+                @Html.ValidationMessageFor(model => model.ItemTypes)
+            </ul>
+        </div>
 
         <p>
             <input type="submit" value="Create" />
