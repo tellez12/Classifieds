@@ -56,8 +56,8 @@ namespace Classifieds.WebUI.Controllers
         public ActionResult Create()
         {
             ViewBag.SectionSelect = new SelectList(_sectionRepository.GetSections.ToList(), "Id", "Name");
-            ViewBag.ItemTypeList = _itemTypeRepository.GetItemTypes.ToList();
-            
+            ViewBag.ItemTypeList = new SelectList(_itemTypeRepository.GetItemTypes.ToList(), "Id", "Name");
+
             ViewBag.TypeEnumSelect = from ControlType s in Enum.GetValues(typeof(ControlType))
                                      select new { ID = (int)s, Name = s.ToString() };
             ViewData["TypeDD"] = new SelectList(ViewBag.TypeEnumSelect, "ID", "Name");
@@ -140,6 +140,5 @@ namespace Classifieds.WebUI.Controllers
             _repository.Delete(id);
             return RedirectToAction("Index");
         }
-
     }
 }

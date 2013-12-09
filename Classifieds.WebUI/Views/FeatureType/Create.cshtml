@@ -26,7 +26,7 @@
             @Html.LabelFor(model => model.Section)
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.SectionId, ViewBag.SectionSelect as SelectList)
+            @Html.DropDownListFor(model => model.Section, ViewBag.SectionSelect as SelectList)
             @Html.ValidationMessageFor(model => model.Section)
         </div>
         <div class="editor-label">
@@ -65,7 +65,9 @@
             @Html.LabelFor(model => model.ItemTypes)
         </div>
         <div class="editor-field">
-            <ul>
+         
+            @Html.ListBoxFor(model=>model.ItemTypes , ViewBag.ItemTypeList as SelectList)
+          @*  <ul>
                 @foreach (ItemType itemType in ViewBag.ItemTypeList)
                 {
                     <li>
@@ -76,7 +78,7 @@
                     </li>
                 }
                 @Html.ValidationMessageFor(model => model.ItemTypes)
-            </ul>
+            </ul>*@
         </div>
 
         <p>
