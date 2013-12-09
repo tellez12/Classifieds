@@ -11,55 +11,55 @@ namespace Classifieds.Domain.EF
     {
         public IQueryable<Currency> GetCurrencies
         {
-            get { return db.Currencies; }
+            get { return Db.Currencies; }
         }
 
         public Currency GetCurrency(int id)
         {
-            return db.Currencies.Find(id);
+            return Db.Currencies.Find(id);
         }
 
-        public Message Create(Currency Currency)
+        public Message Create(Currency currency)
         {
             try
             {
-                db.Currencies.Add(Currency);
-                db.SaveChanges();
+                Db.Currencies.Add(currency);
+                Db.SaveChanges();
                 return new Message();
             }
             catch (Exception e)
             {
-                return new Message(e, string.Format("Error Creating", Currency.GetType()));
+                return new Message(e, string.Format("Error Creating {0}", currency.GetType()));
             }
         }
 
-        public Message Edit(Currency Currency)
+        public Message Edit(Currency currency)
         {
             try
             {
-                db.Entry(Currency).State = EntityState.Modified;
-                db.SaveChanges();
+                Db.Entry(currency).State = EntityState.Modified;
+                Db.SaveChanges();
                 return new Message();
             }
             catch (Exception e)
             {
-                return new Message(e, string.Format("Error Editing ", Currency.GetType()));
+                return new Message(e, string.Format("Error Editing {0}", currency.GetType()));
             }
         }
 
         public Message Delete(int id)
         {
-            Currency Currency = GetCurrency(id);
+            Currency currency = GetCurrency(id);
             try
             {
-                db.Currencies.Remove(Currency);
-                db.SaveChanges();
+                Db.Currencies.Remove(currency);
+                Db.SaveChanges();
 
                 return new Message();
             }
             catch (Exception e)
             {
-                return new Message(e, string.Format("Error Deleting", Currency.GetType()));
+                return new Message(e, string.Format("Error Deleting {0}", currency.GetType()));
             }
         }
     }

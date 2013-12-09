@@ -11,55 +11,55 @@ namespace Classifieds.Domain.EF
     {
         public IQueryable<FeatureType> GetFeatureTypes
         {
-            get { return db.FeatureTypes.Include("Section"); }
+            get { return Db.FeatureTypes.Include("Section"); }
         }
 
         public FeatureType GetFeatureType(int id)
         {
-            return db.FeatureTypes.Find(id);
+            return Db.FeatureTypes.Find(id);
         }
 
-        public Message Create(FeatureType Feature)
+        public Message Create(FeatureType feature)
         {
             try
             {
-                db.FeatureTypes.Add(Feature);
-                db.SaveChanges();
+                Db.FeatureTypes.Add(feature);
+                Db.SaveChanges();
                 return new Message();
             }
             catch (Exception e)
             {
-                return new Message(e, string.Format("Error Creating", Feature.GetType()));
+                return new Message(e, string.Format("Error Creating {0}", feature.GetType()));
             }
         }
 
-        public Message Edit(FeatureType FeatureType)
+        public Message Edit(FeatureType featureType)
         {
             try
             {
-                db.Entry(FeatureType).State = EntityState.Modified;
-                db.SaveChanges();
+                Db.Entry(featureType).State = EntityState.Modified;
+                Db.SaveChanges();
                 return new Message();
             }
             catch (Exception e)
             {
-                return new Message(e, string.Format("Error Editing ", FeatureType.GetType()));
+                return new Message(e, string.Format("Error Editing {0}", featureType.GetType()));
             }
         }
 
         public Message Delete(int id)
         {
-            FeatureType Feature = GetFeatureType(id);
+            FeatureType feature = GetFeatureType(id);
             try
             {
-                db.FeatureTypes.Remove(Feature);
-                db.SaveChanges();
+                Db.FeatureTypes.Remove(feature);
+                Db.SaveChanges();
 
                 return new Message();
             }
             catch (Exception e)
             {
-                return new Message(e, string.Format("Error Deleting", Feature.GetType()));
+                return new Message(e, string.Format("Error Deleting {0}", feature.GetType()));
             }
         }
     }

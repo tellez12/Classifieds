@@ -7,59 +7,59 @@ using Classifieds.Domain.Utils;
 
 namespace Classifieds.Domain.EF
 {
-    public class EFItemRepository : EFBaseRepository, IItemRepository
+    public class EFItemTypeRepository : EFBaseRepository, IItemTypeRepository
     {
-        public IQueryable<Item> GetItems
+        public IQueryable<ItemType> GetItemTypes
         {
-            get { return Db.Items; }
+            get { return Db.ItemTypes; }
         }
 
-        public Item GetItem(int id)
+        public ItemType GetItemType(int id)
         {
-            return Db.Items.Find(id);
+            return Db.ItemTypes.Find(id);
         }
 
-        public Message Create(Item item)
+        public Message Create(ItemType itemType)
         {
             try
             {
-                Db.Items.Add(item);
+                Db.ItemTypes.Add(itemType);
                 Db.SaveChanges();
                 return new Message();
             }
             catch (Exception e)
             {
-                return new Message(e, string.Format("Error Creating {0}", item.GetType()));
+                return new Message(e, string.Format("Error Creating {0}", itemType.GetType()));
             }
         }
 
-        public Message Edit(Item item)
+        public Message Edit(ItemType itemType)
         {
             try
             {
-                Db.Entry(item).State = EntityState.Modified;
+                Db.Entry(itemType).State = EntityState.Modified;
                 Db.SaveChanges();
                 return new Message();
             }
             catch (Exception e)
             {
-                return new Message(e, string.Format("Error Editing {0}", item.GetType()));
+                return new Message(e, string.Format("Error Editing {0}", itemType.GetType()));
             }
         }
 
         public Message Delete(int id)
         {
-            var item = GetItem(id);
+            var itemType = GetItemType(id);
             try
             {
-                Db.Items.Remove(item);
+                Db.ItemTypes.Remove(itemType);
                 Db.SaveChanges();
 
                 return new Message();
             }
             catch (Exception e)
             {
-                return new Message(e, string.Format("Error Deleting {0}", item.GetType()));
+                return new Message(e, string.Format("Error Deleting {0}", itemType.GetType()));
             }
         }
     }

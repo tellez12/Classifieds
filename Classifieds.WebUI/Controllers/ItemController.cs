@@ -1,22 +1,37 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
-using Classifieds.Domain.EF;
+using Classifieds.Domain.Abstract;
 using Classifieds.Domain.Entities;
+using Classifieds.WebUI.ViewModels.Shared;
 
 namespace Classifieds.WebUI.Controllers
 {
     public class ItemController : Controller
     {
-        private MyContext db = new MyContext();
+        private readonly IItemRepository _repository;
+        private readonly ISectionRepository _sectionRepository;
+        public int PageSize = 4;
+
+        public ItemController(IItemRepository myRepository,ISectionRepository mySectionRepository)
+        {
+            _repository = myRepository;
+            _sectionRepository = mySectionRepository;
+        }
 
         //
         // GET: /Item/
 
-        public ActionResult Index()
+        public ActionResult Index(int page = 1)
         {
-            return View(db.Items.ToList());
+            var pagingInfo = new PagingInfo
+            {
+                CurrentPage = page,
+                ItemsPerPage = PageSize,
+                TotalItems = _repository.GetItems.Count()
+            };
+            ViewBag.pagingInfo = pagingInfo;
+            return View(_repository.GetItems.OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize));
         }
 
         //
@@ -24,7 +39,7 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            Item item = db.Items.Find(id);
+            var item = _repository.GetItem(id);
             if (item == null)
             {
                 return HttpNotFound();
@@ -37,6 +52,7 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.SectionSelect = new SelectList(_sectionRepository.GetSections.ToList(), "Id", "Name");
             return View();
         }
 
@@ -44,13 +60,11 @@ namespace Classifieds.WebUI.Controllers
         // POST: /Item/Create
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create(Item item)
         {
             if (ModelState.IsValid)
             {
-                db.Items.Add(item);
-                db.SaveChanges();
+                _repository.Create(item);
                 return RedirectToAction("Index");
             }
 
@@ -62,11 +76,12 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            Item item = db.Items.Find(id);
+            var item = _repository.GetItem(id);
             if (item == null)
             {
                 return HttpNotFound();
             }
+
             return View(item);
         }
 
@@ -74,15 +89,14 @@ namespace Classifieds.WebUI.Controllers
         // POST: /Item/Edit/5
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit(Item item)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(item).State = EntityState.Modified;
-                db.SaveChanges();
+                _repository.Edit(item);
                 return RedirectToAction("Index");
             }
+
             return View(item);
         }
 
@@ -91,7 +105,8 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            Item item = db.Items.Find(id);
+            var item = _repository.GetItem(id);
+
             if (item == null)
             {
                 return HttpNotFound();
@@ -103,19 +118,10 @@ namespace Classifieds.WebUI.Controllers
         // POST: /Item/Delete/5
 
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Item item = db.Items.Find(id);
-            db.Items.Remove(item);
-            db.SaveChanges();
+            _repository.Delete(id);
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            db.Dispose();
-            base.Dispose(disposing);
         }
     }
 }

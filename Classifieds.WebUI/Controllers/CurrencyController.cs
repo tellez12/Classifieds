@@ -118,11 +118,5 @@ namespace Classifieds.WebUI.Controllers
             repository.Delete(id);
             return RedirectToAction("Index");
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            // repository.Dispose(disposing);
-            base.Dispose(disposing);
-        }
     }
 }

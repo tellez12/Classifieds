@@ -11,55 +11,55 @@ namespace Classifieds.Domain.EF
     {
         public IQueryable<Feature> GetFeatures
         {
-            get { return db.Features; }
+            get { return Db.Features; }
         }
 
         public Feature GetFeature(int id)
         {
-            return db.Features.Find(id);
+            return Db.Features.Find(id);
         }
 
-        public Message Create(Feature Feature)
+        public Message Create(Feature feature)
         {
             try
             {
-                db.Features.Add(Feature);
-                db.SaveChanges();
+                Db.Features.Add(feature);
+                Db.SaveChanges();
                 return new Message();
             }
             catch (Exception e)
             {
-                return new Message(e, string.Format("Error Creating", Feature.GetType()));
+                return new Message(e, string.Format("Error Creating {0}", feature.GetType()));
             }
         }
 
-        public Message Update(Feature Feature)
+        public Message Update(Feature feature)
         {
             try
             {
-                db.Entry(Feature).State = EntityState.Modified;
-                db.SaveChanges();
+                Db.Entry(feature).State = EntityState.Modified;
+                Db.SaveChanges();
                 return new Message();
             }
             catch (Exception e)
             {
-                return new Message(e, string.Format("Error Editing ", Feature.GetType()));
+                return new Message(e, string.Format("Error Editing {0}", feature.GetType()));
             }
         }
 
         public Message Delete(int id)
         {
-            Feature Feature = GetFeature(id);
+            Feature feature = GetFeature(id);
             try
             {
-                db.Features.Remove(Feature);
-                db.SaveChanges();
+                Db.Features.Remove(feature);
+                Db.SaveChanges();
 
                 return new Message();
             }
             catch (Exception e)
             {
-                return new Message(e, string.Format("Error Deleting", Feature.GetType()));
+                return new Message(e, string.Format("Error Deleting {0}", feature.GetType()));
             }
         }
     }

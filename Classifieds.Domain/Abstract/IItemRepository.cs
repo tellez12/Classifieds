@@ -11,9 +11,9 @@ namespace Classifieds.Domain.Abstract
 
         Item GetItem(int id);
 
-        Message Create(Item featuresType);
+        Message Create(Item item);
 
-        Message Update(Item featuresType);
+        Message Edit(Item item);
 
         Message Delete(int id);
     }

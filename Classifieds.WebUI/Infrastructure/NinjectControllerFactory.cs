@@ -13,22 +13,23 @@ namespace Classifieds.WebUI.Infrastructure
 {
     public class NinjectControllerFactory : DefaultControllerFactory
     {
-        private IKernel ninjectKernel;
+        private readonly IKernel _ninjectKernel;
 
         public NinjectControllerFactory()
         {
-            ninjectKernel = new StandardKernel();
+            _ninjectKernel = new StandardKernel();
             AddEFBindings();
             // AddBindings();
         }
 
         private void AddEFBindings()
         {
-            ninjectKernel.Bind<ISectionRepository>().To<EFSectionRepository>();
-            ninjectKernel.Bind<IItemRepository>().To<EFItemRepository>();
-            ninjectKernel.Bind<IFeatureTypeRepository>().To<EFFeatureTypeRepository>();
-            ninjectKernel.Bind<ICurrencyRepository>().To<EFCurrencyRepository>();
-            ninjectKernel.Bind<IFeatureTypeValueRepository>().To<EFFeatureTypeValueRepository>();
+            _ninjectKernel.Bind<ISectionRepository>().To<EFSectionRepository>();
+            _ninjectKernel.Bind<IItemRepository>().To<EFItemRepository>();
+            _ninjectKernel.Bind<IFeatureTypeRepository>().To<EFFeatureTypeRepository>();
+            _ninjectKernel.Bind<ICurrencyRepository>().To<EFCurrencyRepository>();
+            _ninjectKernel.Bind<IFeatureTypeValueRepository>().To<EFFeatureTypeValueRepository>();
+            _ninjectKernel.Bind<IItemTypeRepository>().To<EFItemTypeRepository>();
         }
 
         protected override IController GetControllerInstance(RequestContext
@@ -36,12 +37,12 @@ namespace Classifieds.WebUI.Infrastructure
         {
             return controllerType == null
                 ? null
-                : (IController)ninjectKernel.Get(controllerType);
+                : (IController)_ninjectKernel.Get(controllerType);
         }
 
         private void AddBindings()
         {
-            Mock<IFeatureTypeRepository> mock = new Mock<IFeatureTypeRepository>();
+            var mock = new Mock<IFeatureTypeRepository>();
 
             mock.Setup(m => m.GetFeatureTypes).Returns(new List<FeatureType> {
                  new FeatureType { Name = "Football"},
@@ -49,7 +50,7 @@ namespace Classifieds.WebUI.Infrastructure
                  new FeatureType { Name = "Running shoes" }
              }.AsQueryable());
 
-            ninjectKernel.Bind<IFeatureTypeRepository>().ToConstant(mock.Object);
+            _ninjectKernel.Bind<IFeatureTypeRepository>().ToConstant(mock.Object);
         }
     }
 }

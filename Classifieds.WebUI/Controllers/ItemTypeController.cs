@@ -7,18 +7,18 @@ using Classifieds.WebUI.ViewModels.Shared;
 
 namespace Classifieds.WebUI.Controllers
 {
-    public class SectionController : Controller
+    public class ItemTypeController : Controller
     {
-        private readonly ISectionRepository _repository;
+        private readonly IItemTypeRepository _repository;
         public int PageSize = 4;
 
-        public SectionController(ISectionRepository myRepository)
+        public ItemTypeController(IItemTypeRepository myRepository)
         {
             this._repository = myRepository;
         }
 
         //
-        // GET: /Section/
+        // GET: /ItemType/
 
         public ActionResult Index(int page = 1)
         {
@@ -26,27 +26,27 @@ namespace Classifieds.WebUI.Controllers
                                  {
                                      CurrentPage = page,
                                      ItemsPerPage = PageSize,
-                                     TotalItems = _repository.GetSections.Count()
+                                     TotalItems = _repository.GetItemTypes.Count()
                                  };
             ViewBag.pagingInfo = pagingInfo;
-            return View(_repository.GetSections.OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize));
+            return View(_repository.GetItemTypes.OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize));
         }
 
         //
-        // GET: /Section/Details/5
+        // GET: /ItemType/Details/5
 
         public ActionResult Details(int id = 0)
         {
-            var section = _repository.GetSection(id);
-            if (section == null)
+            var itemType = _repository.GetItemType(id);
+            if (itemType == null)
             {
                 return HttpNotFound();
             }
-            return View(section);
+            return View(itemType);
         }
 
         //
-        // GET: /Section/Create
+        // GET: /ItemType/Create
 
         public ActionResult Create()
         {
@@ -54,65 +54,65 @@ namespace Classifieds.WebUI.Controllers
         }
 
         //
-        // POST: /Section/Create
+        // POST: /ItemType/Create
 
         [HttpPost]
-        public ActionResult Create(Section section)
+        public ActionResult Create(ItemType itemType)
         {
             if (ModelState.IsValid)
             {
-                _repository.Create(section);
+                _repository.Create(itemType);
                 return RedirectToAction("Index");
             }
 
-            return View(section);
+            return View(itemType);
         }
 
         //
-        // GET: /Section/Edit/5
+        // GET: /ItemType/Edit/5
 
         public ActionResult Edit(int id = 0)
         {
-            var section = _repository.GetSection(id);
-            if (section == null)
+            var itemType = _repository.GetItemType(id);
+            if (itemType == null)
             {
                 return HttpNotFound();
             }
 
-            return View(section);
+            return View(itemType);
         }
 
         //
-        // POST: /Section/Edit/5
+        // POST: /ItemType/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(Section section)
+        public ActionResult Edit(ItemType itemType)
         {
             if (ModelState.IsValid)
             {
-                _repository.Edit(section);
+                _repository.Edit(itemType);
                 return RedirectToAction("Index");
             }
 
-            return View(section);
+            return View(itemType);
         }
 
         //
-        // GET: /Section/Delete/5
+        // GET: /ItemType/Delete/5
 
         public ActionResult Delete(int id = 0)
         {
-            var section = _repository.GetSection(id);
+            var itemType = _repository.GetItemType(id);
 
-            if (section == null)
+            if (itemType == null)
             {
                 return HttpNotFound();
             }
-            return View(section);
+            return View(itemType);
         }
 
         //
-        // POST: /Section/Delete/5
+        // POST: /ItemType/Delete/5
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)

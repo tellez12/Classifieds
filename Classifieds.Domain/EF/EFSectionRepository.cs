@@ -11,55 +11,55 @@ namespace Classifieds.Domain.EF
     {
         public IQueryable<Section> GetSections
         {
-            get { return db.Sections; }
+            get { return Db.Sections; }
         }
 
         public Section GetSection(int id)
         {
-            return db.Sections.Find(id);
+            return Db.Sections.Find(id);
         }
 
-        public Message Create(Section Section)
+        public Message Create(Section section)
         {
             try
             {
-                db.Sections.Add(Section);
-                db.SaveChanges();
+                Db.Sections.Add(section);
+                Db.SaveChanges();
                 return new Message();
             }
             catch (Exception e)
             {
-                return new Message(e, string.Format("Error Creating", Section.GetType()));
+                return new Message(e, string.Format("Error Creating {0}", section.GetType()));
             }
         }
 
-        public Message Edit(Section Section)
+        public Message Edit(Section section)
         {
             try
             {
-                db.Entry(Section).State = EntityState.Modified;
-                db.SaveChanges();
+                Db.Entry(section).State = EntityState.Modified;
+                Db.SaveChanges();
                 return new Message();
             }
             catch (Exception e)
             {
-                return new Message(e, string.Format("Error Editing ", Section.GetType()));
+                return new Message(e, string.Format("Error Editing {0}", section.GetType()));
             }
         }
 
         public Message Delete(int id)
         {
-            Section Section = GetSection(id);
+            Section section = GetSection(id);
             try
             {
-                db.Sections.Remove(Section);
-                db.SaveChanges();
+                Db.Sections.Remove(section);
+                Db.SaveChanges();
 
                 return new Message();
             }
             catch (Exception e)
             {
-                return new Message(e, string.Format("Error Deleting", Section.GetType()));
+                return new Message(e, string.Format("Error Deleting {0}", section.GetType()));
             }
         }
     }

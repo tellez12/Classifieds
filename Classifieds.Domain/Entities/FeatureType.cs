@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using Classifieds.Domain.Utils;
+using System.Collections.Generic;
 
 namespace Classifieds.Domain.Entities
 {   //Model, Color , Price
@@ -23,6 +24,6 @@ namespace Classifieds.Domain.Entities
         [ForeignKey("SectionId")]
         public Section Section { get; set; }
 
-        //virtual public List<FeatureTypeValue> Values { set; get; }
+        virtual public List<ItemType> ItemTypes { set; get; }
     }
 }

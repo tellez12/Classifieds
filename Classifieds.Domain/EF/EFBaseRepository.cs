@@ -4,11 +4,11 @@ namespace Classifieds.Domain.EF
 {
     public class EFBaseRepository
     {
-        protected MyContext db = new MyContext();
+        protected MyContext Db = new MyContext();
 
         public void Dispose(bool disposing)
         {
-            db.Dispose();
+            Db.Dispose();
         }
     }
 }

@@ -8,6 +8,8 @@ namespace Classifieds.Domain.Entities
     {
         public int Id { get; set; }
 
+        public virtual ItemType Type{ get; set; }
+
         public string Comment { get; set; }
 
         public decimal Price { get; set; }

@@ -26,5 +26,7 @@ namespace Classifieds.Domain.EF
         public DbSet<UserProfile> UserProfiles { get; set; }
 
         public DbSet<Picture> Pictures { get; set; }
+
+        public DbSet<ItemType> ItemTypes { get; set; }
     }
 }

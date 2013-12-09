@@ -5,21 +5,13 @@
 }
 
 <h2>Create</h2>
-
+@using Classifieds.Domain.Entities
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>Item</legend>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Comment)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Comment)
-            @Html.ValidationMessageFor(model => model.Comment)
-        </div>
+        <legend>Item</legend>       
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Price)
@@ -29,29 +21,27 @@
             @Html.ValidationMessageFor(model => model.Price)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.PublishDate)
+         <div class="editor-label">
+            @Html.LabelFor(model => model.Comment)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.PublishDate)
-            @Html.ValidationMessageFor(model => model.PublishDate)
+            @Html.EditorFor(model => model.Comment)
+            @Html.ValidationMessageFor(model => model.Comment)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.LastUpdateDate)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.LastUpdateDate)
-            @Html.ValidationMessageFor(model => model.LastUpdateDate)
-        </div>
+        @foreach (Section item in ViewBag.SectionSelect)
+        {
+            <div id="section@item.Name">
+               @foreach (var feature in item.Features)
+               {
+                   
+  
+               }
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.AdquiredDate)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.AdquiredDate)
-            @Html.ValidationMessageFor(model => model.AdquiredDate)
-        </div>
+            </div>
+            
+        }
+
 
         <p>
             <input type="submit" value="Create" />

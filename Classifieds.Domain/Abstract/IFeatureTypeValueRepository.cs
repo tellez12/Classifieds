@@ -11,9 +11,9 @@ namespace Classifieds.Domain.Abstract
 
         FeatureTypeValue GetFeatureTypeValue(int id);
 
-        Message Create(FeatureTypeValue featuresType);
+        Message Create(FeatureTypeValue value);
 
-        Message Edit(FeatureTypeValue featuresType);
+        Message Edit(FeatureTypeValue featureTypeValue);
 
         Message Delete(int id);
     }

@@ -1,4 +1,5 @@
-﻿@model Classifieds.Domain.Entities.FeatureType
+﻿@using Classifieds.Domain.Entities
+@model Classifieds.Domain.Entities.FeatureType
 
 @{
     ViewBag.Title = "Create";
@@ -60,6 +61,21 @@
             @Html.EditorFor(model => model.Order)
             @Html.ValidationMessageFor(model => model.Order)
         </div>
+        
+        <div class="editor-field">
+    <ul>
+        @foreach (ItemType itemType in ViewBag.PossibleTeachers)
+        {
+            <li>                        
+              
+                   <input type="checkbox" name="ItemTypes" value="@itemType.Id" />
+                
+                @itemType.Name
+            </li>
+        }
+        @Html.ValidationMessageFor(model => model.ItemTypes)
+    </ul>
+</div>
 
         <p>
             <input type="submit" value="Create" />

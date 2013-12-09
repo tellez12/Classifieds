@@ -11,9 +11,9 @@ namespace Classifieds.Domain.Abstract
 
         Currency GetCurrency(int id);
 
-        Message Create(Currency Currency);
+        Message Create(Currency currency);
 
-        Message Edit(Currency Currency);
+        Message Edit(Currency currency);
 
         Message Delete(int id);
     }

@@ -50,12 +50,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IItemTypeRepository.cs" />
     <Compile Include="Abstract\ICurrencyRepository.cs" />
     <Compile Include="Abstract\IFeatureTypeValueRepository.cs" />
     <Compile Include="Abstract\IFeatureRepository.cs" />
     <Compile Include="Abstract\IItemRepository.cs" />
     <Compile Include="Abstract\ISectionRepository.cs" />
     <Compile Include="Abstract\IFeatureTypeRepository.cs" />
+    <Compile Include="EF\EFItemTypeRepository.cs" />
     <Compile Include="EF\EFItemRepository.cs" />
     <Compile Include="EF\EFFeatureTypeValueRepository.cs" />
     <Compile Include="EF\EFCurrencyRepository.cs" />
@@ -65,6 +67,7 @@
     <Compile Include="EF\EFSectionRepository.cs" />
     <Compile Include="EF\MyContext.cs" />
     <Compile Include="Entities\AccountModels.cs" />
+    <Compile Include="Entities\ItemType.cs" />
     <Compile Include="Entities\Currency.cs" />
     <Compile Include="Entities\Feature.cs" />
     <Compile Include="Entities\FeatureType.cs" />
@@ -83,6 +86,10 @@
     <Compile Include="Migrations\201311291740583_AddCurrencyDetails.cs" />
     <Compile Include="Migrations\201311291740583_AddCurrencyDetails.Designer.cs">
       <DependentUpon>201311291740583_AddCurrencyDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201312090200187_itemType.cs" />
+    <Compile Include="Migrations\201312090200187_itemType.Designer.cs">
+      <DependentUpon>201312090200187_itemType.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -106,6 +113,12 @@
     <EmbeddedResource Include="Migrations\201311291740583_AddCurrencyDetails.resx">
       <DependentUpon>201311291740583_AddCurrencyDetails.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201312090200187_itemType.resx">
+      <DependentUpon>201312090200187_itemType.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

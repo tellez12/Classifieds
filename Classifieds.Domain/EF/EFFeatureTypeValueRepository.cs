@@ -11,55 +11,55 @@ namespace Classifieds.Domain.EF
     {
         public IQueryable<FeatureTypeValue> GetFeatureTypeValues
         {
-            get { return db.FeatureTypeValues.Include("Section"); }
+            get { return Db.FeatureTypeValues.Include("Section"); }
         }
 
         public FeatureTypeValue GetFeatureTypeValue(int id)
         {
-            return db.FeatureTypeValues.Find(id);
+            return Db.FeatureTypeValues.Find(id);
         }
 
-        public Message Create(FeatureTypeValue Value)
+        public Message Create(FeatureTypeValue value)
         {
             try
             {
-                db.FeatureTypeValues.Add(Value);
-                db.SaveChanges();
+                Db.FeatureTypeValues.Add(value);
+                Db.SaveChanges();
                 return new Message();
             }
             catch (Exception e)
             {
-                return new Message(e, string.Format("Error Creating", Value.GetType()));
+                return new Message(e, string.Format("Error Creating {0}", value.GetType()));
             }
         }
 
-        public Message Edit(FeatureTypeValue FeatureTypeValue)
+        public Message Edit(FeatureTypeValue featureTypeValue)
         {
             try
             {
-                db.Entry(FeatureTypeValue).State = EntityState.Modified;
-                db.SaveChanges();
+                Db.Entry(featureTypeValue).State = EntityState.Modified;
+                Db.SaveChanges();
                 return new Message();
             }
             catch (Exception e)
             {
-                return new Message(e, string.Format("Error Editing ", FeatureTypeValue.GetType()));
+                return new Message(e, string.Format("Error Editing {0}", featureTypeValue.GetType()));
             }
         }
 
         public Message Delete(int id)
         {
-            FeatureTypeValue Value = GetFeatureTypeValue(id);
+            FeatureTypeValue value = GetFeatureTypeValue(id);
             try
             {
-                db.FeatureTypeValues.Remove(Value);
-                db.SaveChanges();
+                Db.FeatureTypeValues.Remove(value);
+                Db.SaveChanges();
 
                 return new Message();
             }
             catch (Exception e)
             {
-                return new Message(e, string.Format("Error Deleting", Value.GetType()));
+                return new Message(e, string.Format("Error Deleting {0}", value.GetType()));
             }
         }
     }
