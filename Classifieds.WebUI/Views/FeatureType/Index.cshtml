@@ -29,6 +29,10 @@
         <th>
             @Html.DisplayNameFor(model => model.Order)
         </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.ItemTypes)
+        </th>
         <th></th>
     </tr>
 
@@ -51,6 +55,10 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Order)
+        </td>
+        <td>
+            @Html.Display(string.Join(" ",item.ItemTypes.Select(i=>i.Name).ToArray()))
+@*            @Html.DisplayFor(modelItem => string.Join(" ",item.ItemTypes.Select(i=>i.Name).ToArray()))*@
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

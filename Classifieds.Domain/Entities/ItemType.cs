@@ -10,5 +10,10 @@ namespace Classifieds.Domain.Entities
         public string Name { get; set; }
         public virtual List<FeatureType> FeatureTypes { get; set; }
 
+        public override string ToString()
+        {
+            return Name;
+        }
+
     }
 }

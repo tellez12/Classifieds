@@ -1,5 +1,5 @@
 ﻿@using Classifieds.Domain.Entities
-@model Classifieds.Domain.Entities.FeatureType
+@model Classifieds.WebUI.ViewModels.FeatureTypeViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -21,20 +21,20 @@
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
         </div>
-
+       
         <div class="editor-label">
-            @Html.LabelFor(model => model.Section)
+            @Html.LabelFor(model => model.SectionId)
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.Section, ViewBag.SectionSelect as SelectList)
-            @Html.ValidationMessageFor(model => model.Section)
+            @Html.DropDownListFor(model => model.SectionId, Model.SectionSelect)
+            @Html.ValidationMessageFor(model => model.SectionId)
         </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.ControlType)
         </div>
 
         <div class="editor-field">
-            @Html.DropDownList("TypeDD", ViewBag.TypeEnumSelect as SelectList)
+            @Html.DropDownListFor(model => model.ControlType, Model.ControllerTypeSelect)
             @Html.ValidationMessageFor(model => model.ControlType)
         </div>
 
@@ -66,7 +66,7 @@
         </div>
         <div class="editor-field">
          
-            @Html.ListBoxFor(model=>model.ItemTypes , ViewBag.ItemTypeList as SelectList)
+            @Html.ListBoxFor(model=>model.ItemTypes , Model.ItemTypeSelect)
           @*  <ul>
                 @foreach (ItemType itemType in ViewBag.ItemTypeList)
                 {

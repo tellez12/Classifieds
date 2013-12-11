@@ -95,6 +95,14 @@
     <Compile Include="Migrations\201312091932346_test1.Designer.cs">
       <DependentUpon>201312091932346_test1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201312102356306_test11.cs" />
+    <Compile Include="Migrations\201312102356306_test11.Designer.cs">
+      <DependentUpon>201312102356306_test11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201312110047145_test2.cs" />
+    <Compile Include="Migrations\201312110047145_test2.Designer.cs">
+      <DependentUpon>201312110047145_test2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Enums.cs" />
@@ -122,6 +130,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201312091932346_test1.resx">
       <DependentUpon>201312091932346_test1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201312102356306_test11.resx">
+      <DependentUpon>201312102356306_test11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201312110047145_test2.resx">
+      <DependentUpon>201312110047145_test2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

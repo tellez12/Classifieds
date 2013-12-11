@@ -191,6 +191,7 @@
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
     <Compile Include="Controllers\SectionController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\FeatureTypeViewModel.cs" />
     <Compile Include="ViewModels\Shared\PagingInfo.cs" />
   </ItemGroup>
   <ItemGroup>

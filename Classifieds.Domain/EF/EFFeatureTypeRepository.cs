@@ -11,7 +11,7 @@ namespace Classifieds.Domain.EF
     {
         public IQueryable<FeatureType> GetFeatureTypes
         {
-            get { return Db.FeatureTypes.Include("Section"); }
+            get { return Db.FeatureTypes.Include("Section").Include("ItemTypes"); }
         }
 
         public FeatureType GetFeatureType(int id)

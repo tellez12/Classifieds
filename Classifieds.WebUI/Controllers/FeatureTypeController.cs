@@ -5,6 +5,7 @@ using Classifieds.Domain.Abstract;
 using Classifieds.Domain.Entities;
 using Classifieds.Domain.Utils;
 using Classifieds.WebUI.ViewModels.Shared;
+using Classifieds.WebUI.ViewModels;
 
 namespace Classifieds.WebUI.Controllers
 {
@@ -55,25 +56,20 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.SectionSelect = new SelectList(_sectionRepository.GetSections.ToList(), "Id", "Name");
-            ViewBag.ItemTypeList = new SelectList(_itemTypeRepository.GetItemTypes.ToList(), "Id", "Name");
 
-            ViewBag.TypeEnumSelect = from ControlType s in Enum.GetValues(typeof(ControlType))
-                                     select new { ID = (int)s, Name = s.ToString() };
-            ViewData["TypeDD"] = new SelectList(ViewBag.TypeEnumSelect, "ID", "Name");
-            return View();
+            return View(new FeatureTypeViewModel(_repository,_sectionRepository,_itemTypeRepository));
         }
 
         //
         // POST: /FeatureType/Create
 
         [HttpPost]
-        public ActionResult Create(FeatureType featureType, ControlType typeDD)
+        public ActionResult Create(FeatureTypeViewModel featureType)
         {
             if (ModelState.IsValid)
             {
-                featureType.ControlType = typeDD;
-                _repository.Create(featureType);
+          
+                _repository.Create(featureType.ToModel());
                 return RedirectToAction("Index");
             }
 
