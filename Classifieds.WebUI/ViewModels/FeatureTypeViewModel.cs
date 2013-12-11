@@ -1,17 +1,16 @@
-﻿using Classifieds.Domain.Abstract;
-using Classifieds.Domain.Entities;
-using Classifieds.Domain.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Classifieds.Domain.Abstract;
+using Classifieds.Domain.Entities;
+using Classifieds.Domain.Utils;
 
 namespace Classifieds.WebUI.ViewModels
 {
     public class FeatureTypeViewModel
     {
-
         public int Id { get; set; }
 
         public string Name { get; set; }
@@ -25,15 +24,27 @@ namespace Classifieds.WebUI.ViewModels
         public int Order { get; set; }
 
         public int SectionId { get; set; }
+
         public int[] ItemTypes { set; get; }
+
         public SelectList SectionSelect { get; set; }
+
         public SelectList ControllerTypeSelect { get; set; }
+
         public SelectList ItemTypeSelect { get; set; }
 
-        public FeatureTypeViewModel() { }
+        private IFeatureTypeRepository _repository;
+        private ISectionRepository _sectionRepository;
+        private IItemTypeRepository _itemTypeRepository;
+
+        public FeatureTypeViewModel()
+        {
+        }
 
         public FeatureTypeViewModel(FeatureType ft, IFeatureTypeRepository myRepository, ISectionRepository mySectionRepository, IItemTypeRepository myItemTypeRepository)
         {
+            SetRepositories(myRepository, mySectionRepository, myItemTypeRepository);
+
             Id = ft.Id;
             Name = ft.Name;
             Required = ft.Required;
@@ -42,21 +53,26 @@ namespace Classifieds.WebUI.ViewModels
             Order = ft.Order;
             SectionId = ft.Section.Id;
             ItemTypes = getItemTypesId(ft.ItemTypes).ToArray();
-            FillSelectList(myRepository, mySectionRepository, myItemTypeRepository);     
+            FillSelectList();
+        }
 
+        public void SetRepositories(IFeatureTypeRepository myRepository, ISectionRepository mySectionRepository, IItemTypeRepository myItemTypeRepository)
+        {
+            _repository = myRepository;
+            _sectionRepository = mySectionRepository;
+            _itemTypeRepository = myItemTypeRepository;
         }
 
         public FeatureTypeViewModel(IFeatureTypeRepository myRepository, ISectionRepository mySectionRepository, IItemTypeRepository myItemTypeRepository)
         {
-            FillSelectList(myRepository, mySectionRepository, myItemTypeRepository);
+            SetRepositories(myRepository, mySectionRepository, myItemTypeRepository);
+            FillSelectList();
         }
 
-        private void FillSelectList(IFeatureTypeRepository myRepository, ISectionRepository mySectionRepository, IItemTypeRepository myItemTypeRepository)
+        private void FillSelectList()
         {
-
-
-            SectionSelect = new SelectList(mySectionRepository.GetSections.ToList(), "Id", "Name",SectionId);
-            ItemTypeSelect = new SelectList(myItemTypeRepository.GetItemTypes.ToList(), "Id", "Name",ItemTypes);
+            SectionSelect = new SelectList(_sectionRepository.GetSections.ToList(), "Id", "Name", SectionId);
+            ItemTypeSelect = new SelectList(_itemTypeRepository.GetItemTypes.ToList(), "Id", "Name", ItemTypes);
 
             var TypeEnumSelect = from ControlType s in Enum.GetValues(typeof(ControlType))
                                  select new { ID = (int)s, Name = s.ToString() };
@@ -73,21 +89,29 @@ namespace Classifieds.WebUI.ViewModels
             var ft = new FeatureType
                          {
                              Name = Name,
-                             ControlType = (ControlType) ControlType,
+                             ControlType = (ControlType)ControlType,
                              Order = Order,
                              Required = Required,
                              RequiredText = RequiredText,
-                             ItemTypes = GetItemTypes(),
-                             Section =  new Section{Id=SectionId},
-                            
+                             ItemTypes = GetItemTypes().ToList(),
+                             Section = GetSection(),
                          };
 
             return ft;
         }
 
-        private List<ItemType> GetItemTypes()
+        private Section GetSection()
         {
-            return ItemTypes.Select(typeId => new ItemType {Id = typeId}).ToList();
+            var section = _sectionRepository.GetSection(SectionId);
+            return section;
+        }
+
+        private IEnumerable<ItemType> GetItemTypes()
+        {
+            foreach (var item in ItemTypes)
+            {
+                yield return _itemTypeRepository.GetItemType(item);
+            }
         }
     }
 }

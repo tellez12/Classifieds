@@ -4,8 +4,8 @@ using System.Web.Mvc;
 using Classifieds.Domain.Abstract;
 using Classifieds.Domain.Entities;
 using Classifieds.Domain.Utils;
-using Classifieds.WebUI.ViewModels.Shared;
 using Classifieds.WebUI.ViewModels;
+using Classifieds.WebUI.ViewModels.Shared;
 
 namespace Classifieds.WebUI.Controllers
 {
@@ -56,8 +56,7 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Create()
         {
-
-            return View(new FeatureTypeViewModel(_repository,_sectionRepository,_itemTypeRepository));
+            return View(new FeatureTypeViewModel(_repository, _sectionRepository, _itemTypeRepository));
         }
 
         //
@@ -68,7 +67,7 @@ namespace Classifieds.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-          
+                featureType.SetRepositories(_repository, _sectionRepository, _itemTypeRepository);
                 _repository.Create(featureType.ToModel());
                 return RedirectToAction("Index");
             }
