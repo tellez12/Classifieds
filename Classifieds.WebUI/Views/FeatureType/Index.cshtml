@@ -57,7 +57,7 @@
             @Html.DisplayFor(modelItem => item.Order)
         </td>
         <td>
-            @Html.Display(string.Join(" ",item.ItemTypes.Select(i=>i.Name).ToArray()))
+            @Html.Display(string.Join(" ",item.ItemTypes.Select(i=>i.ToString()).ToArray()))
 @*            @Html.DisplayFor(modelItem => string.Join(" ",item.ItemTypes.Select(i=>i.Name).ToArray()))*@
         </td>
         <td>
