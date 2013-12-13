@@ -8,78 +8,125 @@ using Classifieds.Domain.Entities;
 
 namespace Classifieds.Domain.UOW
 {
-   public  class EfUnitOfWork : IUnitOfWork
-   {
-       private MyContext context = new MyContext();
+    public class EfUnitOfWork : IUnitOfWork
+    {
+        private MyContext context = new MyContext();
 
-       private GenericRepository<Section> sectionRepository;
-       private GenericRepository<ItemType> itemTypeRepository;
-       private GenericRepository<FeatureType> featureTypeRepository;
+        private GenericRepository<Item> itemRepository;
+        private GenericRepository<Section> sectionRepository;
+        private GenericRepository<Currency> currencyRepository;
+        private GenericRepository<Feature> featureRepository;
+        private GenericRepository<FeatureType> featureTypeRepository;
+        private GenericRepository<Picture> pictureRepository;
+        private GenericRepository<ItemType> itemTypeRepository;
 
-       public GenericRepository<Section> SectionRepository
-       {
-           get
-           {
+        public GenericRepository<Currency> CurrencyRepository
+        {
+            get
+            {
+                if (this.currencyRepository == null)
+                {
+                    this.currencyRepository = new GenericRepository<Currency>(context);
+                }
+                return currencyRepository;
+            }
+        }
 
-               if (this.sectionRepository == null)
-               {
-                   this.sectionRepository = new GenericRepository<Section>(context);
-               }
-               return sectionRepository;
-           }
-       }
+        public GenericRepository<Section> SectionRepository
+        {
+            get
+            {
+                if (this.sectionRepository == null)
+                {
+                    this.sectionRepository = new GenericRepository<Section>(context);
+                }
+                return sectionRepository;
+            }
+        }
 
-       public GenericRepository<ItemType> ItemTypeRepository
-       {
-           get
-           {
+        public GenericRepository<Item> ItemRepository
+        {
+            get
+            {
+                if (this.itemRepository == null)
+                {
+                    this.itemRepository = new GenericRepository<Item>(context);
+                }
+                return itemRepository;
+            }
+        }
 
-               if (this.itemTypeRepository == null)
-               {
-                   this.itemTypeRepository = new GenericRepository<ItemType>(context);
-               }
-               return itemTypeRepository;
-           }
-       }
+        public GenericRepository<Feature> FeatureRepository
+        {
+            get
+            {
+                if (this.featureRepository == null)
+                {
+                    this.featureRepository = new GenericRepository<Feature>(context);
+                }
+                return featureRepository;
+            }
+        }
 
-       public GenericRepository<FeatureType> FeatureTypeRepository
-       {
-           get
-           {
+        public GenericRepository<Picture> PictureRepository
+        {
+            get
+            {
+                if (this.pictureRepository == null)
+                {
+                    this.pictureRepository = new GenericRepository<Picture>(context);
+                }
+                return pictureRepository;
+            }
+        }
 
-               if (this.featureTypeRepository == null)
-               {
-                   this.featureTypeRepository = new GenericRepository<FeatureType>(context);
-               }
-               return featureTypeRepository;
-           }
-       }
+        public GenericRepository<ItemType> ItemTypeRepository
+        {
+            get
+            {
+                if (this.itemTypeRepository == null)
+                {
+                    this.itemTypeRepository = new GenericRepository<ItemType>(context);
+                }
+                return itemTypeRepository;
+            }
+        }
 
+        public GenericRepository<FeatureType> FeatureTypeRepository
+        {
+            get
+            {
+                if (this.featureTypeRepository == null)
+                {
+                    this.featureTypeRepository = new GenericRepository<FeatureType>(context);
+                }
+                return featureTypeRepository;
+            }
+        }
 
-       public void Save()
-       {
-           context.SaveChanges();
-       }
+        public void Save()
+        {
+            context.SaveChanges();
+        }
 
-       private bool disposed = false;
+        private bool disposed = false;
 
-       protected virtual void Dispose(bool disposing)
-       {
-           if (!this.disposed)
-           {
-               if (disposing)
-               {
-                   context.Dispose();
-               }
-           }
-           this.disposed = true;
-       }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    context.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
 
-       public void Dispose()
-       {
-           Dispose(true);
-           GC.SuppressFinalize(this);
-       }
-
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
     }
 }
