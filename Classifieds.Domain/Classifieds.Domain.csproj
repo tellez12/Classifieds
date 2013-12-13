@@ -105,6 +105,9 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UOW\GenericRepository.cs" />
+    <Compile Include="UOW\EfUnitOfWork.cs" />
+    <Compile Include="UOW\IUnitOfWork.cs" />
     <Compile Include="Utils\Enums.cs" />
     <Compile Include="Utils\Message.cs" />
   </ItemGroup>

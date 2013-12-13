@@ -29,7 +29,8 @@ namespace Classifieds.Domain.EF
             }
             catch (Exception e)
             {
-                return new Message(e, string.Format("Error Creating {0}", feature.GetType()));
+                throw;
+               // return new Message(e, string.Format("Error Creating {0}", feature.GetType()));
             }
         }
 

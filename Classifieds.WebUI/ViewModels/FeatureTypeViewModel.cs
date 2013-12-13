@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using Classifieds.Domain.Abstract;
 using Classifieds.Domain.Entities;
+using Classifieds.Domain.UOW;
 using Classifieds.Domain.Utils;
 
 namespace Classifieds.WebUI.ViewModels
@@ -33,17 +35,15 @@ namespace Classifieds.WebUI.ViewModels
 
         public SelectList ItemTypeSelect { get; set; }
 
-        private IFeatureTypeRepository _repository;
-        private ISectionRepository _sectionRepository;
-        private IItemTypeRepository _itemTypeRepository;
+        private IUnitOfWork unitOfWork;
 
         public FeatureTypeViewModel()
         {
         }
 
-        public FeatureTypeViewModel(FeatureType ft, IFeatureTypeRepository myRepository, ISectionRepository mySectionRepository, IItemTypeRepository myItemTypeRepository)
+        public FeatureTypeViewModel(FeatureType ft,IUnitOfWork myUnitOfWork)
         {
-            SetRepositories(myRepository, mySectionRepository, myItemTypeRepository);
+            SetRepositories( myUnitOfWork);
 
             Id = ft.Id;
             Name = ft.Name;
@@ -56,27 +56,26 @@ namespace Classifieds.WebUI.ViewModels
             FillSelectList();
         }
 
-        public void SetRepositories(IFeatureTypeRepository myRepository, ISectionRepository mySectionRepository, IItemTypeRepository myItemTypeRepository)
+        public void SetRepositories(IUnitOfWork myUnitOfWork)
         {
-            _repository = myRepository;
-            _sectionRepository = mySectionRepository;
-            _itemTypeRepository = myItemTypeRepository;
+            unitOfWork = myUnitOfWork;
+
         }
 
-        public FeatureTypeViewModel(IFeatureTypeRepository myRepository, ISectionRepository mySectionRepository, IItemTypeRepository myItemTypeRepository)
+        public FeatureTypeViewModel(IUnitOfWork myUnitOfWork)
         {
-            SetRepositories(myRepository, mySectionRepository, myItemTypeRepository);
+            SetRepositories( myUnitOfWork);
             FillSelectList();
         }
 
         private void FillSelectList()
         {
-            SectionSelect = new SelectList(_sectionRepository.GetSections.ToList(), "Id", "Name", SectionId);
-            ItemTypeSelect = new SelectList(_itemTypeRepository.GetItemTypes.ToList(), "Id", "Name", ItemTypes);
+            SectionSelect = new SelectList(unitOfWork.SectionRepository.Get().ToList(), "Id", "Name", SectionId);
+            ItemTypeSelect = new SelectList(unitOfWork.ItemTypeRepository.Get().ToList(), "Id", "Name", ItemTypes);
 
-            var TypeEnumSelect = from ControlType s in Enum.GetValues(typeof(ControlType))
+            var typeEnumSelect = from ControlType s in Enum.GetValues(typeof(ControlType))
                                  select new { ID = (int)s, Name = s.ToString() };
-            ControllerTypeSelect = new SelectList(TypeEnumSelect, "ID", "Name", ControlType);
+            ControllerTypeSelect = new SelectList(typeEnumSelect, "ID", "Name", ControlType);
         }
 
         private IEnumerable<int> getItemTypesId(IEnumerable<ItemType> list)
@@ -102,16 +101,13 @@ namespace Classifieds.WebUI.ViewModels
 
         private Section GetSection()
         {
-            var section = _sectionRepository.GetSection(SectionId);
+            var section = unitOfWork.SectionRepository.GetById(SectionId);
             return section;
         }
 
         private IEnumerable<ItemType> GetItemTypes()
         {
-            foreach (var item in ItemTypes)
-            {
-                yield return _itemTypeRepository.GetItemType(item);
-            }
+            return ItemTypes.Select(id => unitOfWork.ItemTypeRepository.GetById(id));
         }
     }
 }

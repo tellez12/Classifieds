@@ -6,6 +6,7 @@ using System.Web.Routing;
 using Classifieds.Domain.Abstract;
 using Classifieds.Domain.EF;
 using Classifieds.Domain.Entities;
+using Classifieds.Domain.UOW;
 using Moq;
 using Ninject;
 
@@ -30,6 +31,7 @@ namespace Classifieds.WebUI.Infrastructure
             _ninjectKernel.Bind<ICurrencyRepository>().To<EFCurrencyRepository>();
             _ninjectKernel.Bind<IFeatureTypeValueRepository>().To<EFFeatureTypeValueRepository>();
             _ninjectKernel.Bind<IItemTypeRepository>().To<EFItemTypeRepository>();
+            _ninjectKernel.Bind<IUnitOfWork>().To<EfUnitOfWork>();
         }
 
         protected override IController GetControllerInstance(RequestContext

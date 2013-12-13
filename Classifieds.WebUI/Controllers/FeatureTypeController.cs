@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using Classifieds.Domain.Abstract;
 using Classifieds.Domain.Entities;
+using Classifieds.Domain.UOW;
 using Classifieds.Domain.Utils;
 using Classifieds.WebUI.ViewModels;
 using Classifieds.WebUI.ViewModels.Shared;
@@ -11,16 +13,13 @@ namespace Classifieds.WebUI.Controllers
 {
     public class FeatureTypeController : Controller
     {
-        private readonly IFeatureTypeRepository _repository;
-        private readonly ISectionRepository _sectionRepository;
-        private readonly IItemTypeRepository _itemTypeRepository;
+
+        IUnitOfWork unitOfWork;
         public int PageSize = 4;
 
-        public FeatureTypeController(IFeatureTypeRepository myRepository, ISectionRepository mySectionRepository, IItemTypeRepository myItemTypeRepository)
+        public FeatureTypeController(IUnitOfWork myUnitOfWork)
         {
-            _repository = myRepository;
-            _sectionRepository = mySectionRepository;
-            _itemTypeRepository = myItemTypeRepository;
+            unitOfWork = myUnitOfWork;
         }
 
         //
@@ -32,10 +31,10 @@ namespace Classifieds.WebUI.Controllers
                                  {
                                      CurrentPage = page,
                                      ItemsPerPage = PageSize,
-                                     TotalItems = _repository.GetFeatureTypes.Count()
+                                     TotalItems = unitOfWork.FeatureTypeRepository.Get().Count()
                                  };
             ViewBag.pagingInfo = pagingInfo;
-            return View(_repository.GetFeatureTypes.OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize));
+            return View(unitOfWork.FeatureTypeRepository.Get(includeProperties:"Section,ItemTypes").OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize));
         }
 
         //
@@ -43,7 +42,7 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            FeatureType featureType = _repository.GetFeatureType(id);
+            FeatureType featureType = unitOfWork.FeatureTypeRepository.GetById(id);
             if (featureType == null)
             {
                 return HttpNotFound();
@@ -56,7 +55,7 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Create()
         {
-            return View(new FeatureTypeViewModel(_repository, _sectionRepository, _itemTypeRepository));
+            return View(new FeatureTypeViewModel(unitOfWork));
         }
 
         //
@@ -67,8 +66,9 @@ namespace Classifieds.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                featureType.SetRepositories(_repository, _sectionRepository, _itemTypeRepository);
-                _repository.Create(featureType.ToModel());
+                featureType.SetRepositories(unitOfWork);
+                unitOfWork.FeatureTypeRepository.Insert(featureType.ToModel());
+                unitOfWork.Save();
                 return RedirectToAction("Index");
             }
 
@@ -80,12 +80,12 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            FeatureType featureType = _repository.GetFeatureType(id);
+            FeatureType featureType = unitOfWork.FeatureTypeRepository.GetById(id);
             if (featureType == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.SectionSelect = new SelectList(_sectionRepository.GetSections.ToList(), "Id", "Name");
+            ViewBag.SectionSelect = new SelectList(unitOfWork.SectionRepository.Get().ToList(), "Id", "Name");
             var enumList = from ControlType s in Enum.GetValues(typeof(ControlType))
                            select new { ID = (int)s, Name = s.ToString() };
 
@@ -105,7 +105,8 @@ namespace Classifieds.WebUI.Controllers
             if (ModelState.IsValid)
             {
                 featureType.ControlType = typeDD;
-                _repository.Edit(featureType);
+                unitOfWork.FeatureTypeRepository.Update(featureType);
+                unitOfWork.Save();  
                 return RedirectToAction("Index");
             }
 
@@ -117,8 +118,7 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            var featureType = _repository.GetFeatureType(id);
-
+            var featureType = unitOfWork.FeatureTypeRepository.GetById(id);
             if (featureType == null)
             {
                 return HttpNotFound();
@@ -132,7 +132,8 @@ namespace Classifieds.WebUI.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            _repository.Delete(id);
+            unitOfWork.FeatureTypeRepository.Delete(id);
+            unitOfWork.Save();
             return RedirectToAction("Index");
         }
     }

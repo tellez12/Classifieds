@@ -17,9 +17,9 @@ namespace Classifieds.Domain.Utils
             Data = "";
         }
 
-        public Message(Boolean valido, string data = "")
+        public Message(Boolean valid, string data = "")
         {
-            Valid = valido;
+            Valid = valid;
             Data = data;
             InternalException = null;
         }
