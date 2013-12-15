@@ -3,18 +3,19 @@ using System.Linq;
 using System.Web.Mvc;
 using Classifieds.Domain.Abstract;
 using Classifieds.Domain.Entities;
+using Classifieds.Domain.UOW;
 using Classifieds.WebUI.ViewModels.Shared;
 
 namespace Classifieds.WebUI.Controllers
 {
     public class FeatureTypeValueController : Controller
     {
-        private IFeatureTypeValueRepository repository;
+        private IUnitOfWork unitOfWork;
         public int pageSize = 4;
 
-        public FeatureTypeValueController(IFeatureTypeValueRepository MyRepository)
+        public FeatureTypeValueController(IUnitOfWork myUnitOfWork)
         {
-            this.repository = MyRepository;
+            this.unitOfWork = myUnitOfWork;
         }
 
         //
@@ -25,9 +26,9 @@ namespace Classifieds.WebUI.Controllers
             PagingInfo pagingInfo = new PagingInfo();
             pagingInfo.CurrentPage = page;
             pagingInfo.ItemsPerPage = pageSize;
-            pagingInfo.TotalItems = repository.GetFeatureTypeValues.Count();
+            pagingInfo.TotalItems = unitOfWork.FeatureTypeValueRepository.Get().Count();
             ViewBag.pagingInfo = pagingInfo;
-            return View(repository.GetFeatureTypeValues.OrderBy(p => p.Id).Skip((page - 1) * pageSize).Take(pageSize));
+            return View(unitOfWork.FeatureTypeValueRepository.Get().OrderBy(p => p.Id).Skip((page - 1) * pageSize).Take(pageSize));
         }
 
         //
@@ -35,12 +36,12 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            FeatureTypeValue FeatureTypeValue = repository.GetFeatureTypeValue(id);
-            if (FeatureTypeValue == null)
+            FeatureTypeValue featureTypeValue = unitOfWork.FeatureTypeValueRepository.GetById(id);
+            if (featureTypeValue == null)
             {
                 return HttpNotFound();
             }
-            return View(FeatureTypeValue);
+            return View(featureTypeValue);
         }
 
         //
@@ -55,15 +56,15 @@ namespace Classifieds.WebUI.Controllers
         // POST: /FeatureTypeValue/Create
 
         [HttpPost]
-        public ActionResult Create(FeatureTypeValue FeatureTypeValue)
+        public ActionResult Create(FeatureTypeValue featureTypeValue)
         {
             if (ModelState.IsValid)
             {
-                repository.Create(FeatureTypeValue);
+                unitOfWork.FeatureTypeValueRepository.Insert(featureTypeValue);
                 return RedirectToAction("Index");
             }
 
-            return View(FeatureTypeValue);
+            return View(featureTypeValue);
         }
 
         //
@@ -71,7 +72,7 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            FeatureTypeValue FeatureTypeValue = repository.GetFeatureTypeValue(id);
+            FeatureTypeValue FeatureTypeValue = unitOfWork.FeatureTypeValueRepository.GetById(id);
             if (FeatureTypeValue == null)
             {
                 return HttpNotFound();
@@ -88,7 +89,7 @@ namespace Classifieds.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                repository.Edit(FeatureTypeValue);
+                unitOfWork.FeatureTypeValueRepository.Update(FeatureTypeValue);
                 return RedirectToAction("Index");
             }
 
@@ -100,13 +101,13 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            FeatureTypeValue FeatureTypeValue = repository.GetFeatureTypeValue(id);
+            FeatureTypeValue featureTypeValue = unitOfWork.FeatureTypeValueRepository.GetById(id);
 
-            if (FeatureTypeValue == null)
+            if (featureTypeValue == null)
             {
                 return HttpNotFound();
             }
-            return View(FeatureTypeValue);
+            return View(featureTypeValue);
         }
 
         //
@@ -115,7 +116,7 @@ namespace Classifieds.WebUI.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            repository.Delete(id);
+            unitOfWork.FeatureTypeValueRepository.Delete(id);
             return RedirectToAction("Index");
         }
     }

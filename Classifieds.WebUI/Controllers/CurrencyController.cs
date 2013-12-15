@@ -3,18 +3,19 @@ using System.Linq;
 using System.Web.Mvc;
 using Classifieds.Domain.Abstract;
 using Classifieds.Domain.Entities;
+using Classifieds.Domain.UOW;
 using Classifieds.WebUI.ViewModels.Shared;
 
 namespace Classifieds.WebUI.Controllers
 {
     public class CurrencyController : Controller
     {
-        private ICurrencyRepository repository;
+        private IUnitOfWork unitOfWork;
         public int pageSize = 4;
 
-        public CurrencyController(ICurrencyRepository MyRepository)
+        public CurrencyController(IUnitOfWork myUnitOfWork)
         {
-            this.repository = MyRepository;
+            this.unitOfWork = myUnitOfWork;
         }
 
         //
@@ -22,12 +23,15 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Index(int page = 1)
         {
-            PagingInfo pagingInfo = new PagingInfo();
-            pagingInfo.CurrentPage = page;
-            pagingInfo.ItemsPerPage = pageSize;
-            pagingInfo.TotalItems = repository.GetCurrencies.Count();
+            PagingInfo pagingInfo = new PagingInfo
+                                    {
+                                        CurrentPage = page,
+                                        ItemsPerPage = pageSize,
+                                        TotalItems = unitOfWork.CurrencyRepository.Get().Count()
+                                    };
+
             ViewBag.pagingInfo = pagingInfo;
-            return View(repository.GetCurrencies.OrderBy(p => p.Id).Skip((page - 1) * pageSize).Take(pageSize));
+            return View(unitOfWork.CurrencyRepository.Get().OrderBy(p => p.Id).Skip((page - 1) * pageSize).Take(pageSize));
         }
 
         //
@@ -35,7 +39,7 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            Currency Currency = repository.GetCurrency(id);
+            Currency Currency = unitOfWork.CurrencyRepository.GetById(id);
             if (Currency == null)
             {
                 return HttpNotFound();
@@ -59,7 +63,7 @@ namespace Classifieds.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                repository.Create(Currency);
+                unitOfWork.CurrencyRepository.Insert(Currency);
                 return RedirectToAction("Index");
             }
 
@@ -71,7 +75,7 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            Currency Currency = repository.GetCurrency(id);
+            Currency Currency = unitOfWork.CurrencyRepository.GetById(id);
             if (Currency == null)
             {
                 return HttpNotFound();
@@ -88,7 +92,7 @@ namespace Classifieds.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                repository.Edit(Currency);
+                unitOfWork.CurrencyRepository.Update(Currency);
                 return RedirectToAction("Index");
             }
 
@@ -100,7 +104,7 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            Currency Currency = repository.GetCurrency(id);
+            Currency Currency = unitOfWork.CurrencyRepository.GetById(id);
 
             if (Currency == null)
             {
@@ -115,7 +119,7 @@ namespace Classifieds.WebUI.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            repository.Delete(id);
+            unitOfWork.CurrencyRepository.Delete(id);
             return RedirectToAction("Index");
         }
     }

@@ -3,18 +3,19 @@ using System.Linq;
 using System.Web.Mvc;
 using Classifieds.Domain.Abstract;
 using Classifieds.Domain.Entities;
+using Classifieds.Domain.UOW;
 using Classifieds.WebUI.ViewModels.Shared;
 
 namespace Classifieds.WebUI.Controllers
 {
     public class ItemTypeController : Controller
     {
-        private readonly IItemTypeRepository _repository;
+        private IUnitOfWork unitOfWork;
         public int PageSize = 4;
 
-        public ItemTypeController(IItemTypeRepository myRepository)
+        public ItemTypeController(IUnitOfWork myUnitOfWork)
         {
-            this._repository = myRepository;
+            this.unitOfWork = myUnitOfWork;
         }
 
         //
@@ -26,10 +27,10 @@ namespace Classifieds.WebUI.Controllers
                                  {
                                      CurrentPage = page,
                                      ItemsPerPage = PageSize,
-                                     TotalItems = _repository.GetItemTypes.Count()
+                                     TotalItems = unitOfWork.ItemTypeRepository.Get().Count()
                                  };
             ViewBag.pagingInfo = pagingInfo;
-            return View(_repository.GetItemTypes.OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize));
+            return View(unitOfWork.ItemTypeRepository.Get().OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize));
         }
 
         //
@@ -37,7 +38,7 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            var itemType = _repository.GetItemType(id);
+            var itemType = unitOfWork.ItemTypeRepository.GetById(id);
             if (itemType == null)
             {
                 return HttpNotFound();
@@ -61,7 +62,7 @@ namespace Classifieds.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                _repository.Create(itemType);
+                unitOfWork.ItemTypeRepository.Insert(itemType);
                 return RedirectToAction("Index");
             }
 
@@ -73,7 +74,7 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            var itemType = _repository.GetItemType(id);
+            var itemType = unitOfWork.ItemTypeRepository.GetById(id);
             if (itemType == null)
             {
                 return HttpNotFound();
@@ -90,7 +91,7 @@ namespace Classifieds.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                _repository.Edit(itemType);
+                unitOfWork.ItemTypeRepository.Update(itemType);
                 return RedirectToAction("Index");
             }
 
@@ -102,7 +103,7 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            var itemType = _repository.GetItemType(id);
+            var itemType = unitOfWork.ItemTypeRepository.GetById(id);
 
             if (itemType == null)
             {
@@ -117,7 +118,7 @@ namespace Classifieds.WebUI.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            _repository.Delete(id);
+            unitOfWork.ItemTypeRepository.Delete(id);
             return RedirectToAction("Index");
         }
     }

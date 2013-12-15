@@ -8,7 +8,7 @@ using Classifieds.Domain.Entities;
 
 namespace Classifieds.Domain.UOW
 {
-    public class EfUnitOfWork : IUnitOfWork
+    public class EfUnitOfWork : IUnitOfWork,IDisposable
     {
         private MyContext context = new MyContext();
 
@@ -17,6 +17,7 @@ namespace Classifieds.Domain.UOW
         private GenericRepository<Currency> currencyRepository;
         private GenericRepository<Feature> featureRepository;
         private GenericRepository<FeatureType> featureTypeRepository;
+        private GenericRepository<FeatureTypeValue> featureTypeValueRepository;
         private GenericRepository<Picture> pictureRepository;
         private GenericRepository<ItemType> itemTypeRepository;
 
@@ -29,6 +30,18 @@ namespace Classifieds.Domain.UOW
                     this.currencyRepository = new GenericRepository<Currency>(context);
                 }
                 return currencyRepository;
+            }
+        }
+
+        public GenericRepository<FeatureTypeValue> FeatureTypeValueRepository
+        {
+            get
+            {
+                if (this.featureTypeValueRepository == null)
+                {
+                    this.featureTypeValueRepository = new GenericRepository<FeatureTypeValue>(context);
+                }
+                return featureTypeValueRepository;
             }
         }
 

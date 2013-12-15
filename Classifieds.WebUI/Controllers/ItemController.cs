@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using Classifieds.Domain.Abstract;
 using Classifieds.Domain.Entities;
 using Classifieds.WebUI.ViewModels.Shared;
+using Classifieds.Domain.UOW;
 
 namespace Classifieds.WebUI.Controllers
 {
     public class ItemController : Controller
     {
-        private readonly IItemRepository _repository;
-        private readonly ISectionRepository _sectionRepository;
+        private IUnitOfWork unitOfWork;
         public int PageSize = 4;
 
-        public ItemController(IItemRepository myRepository,ISectionRepository mySectionRepository)
+        public ItemController(IUnitOfWork myUnitOfWork)
         {
-            _repository = myRepository;
-            _sectionRepository = mySectionRepository;
+            this.unitOfWork = myUnitOfWork;
         }
 
         //
@@ -28,10 +28,10 @@ namespace Classifieds.WebUI.Controllers
             {
                 CurrentPage = page,
                 ItemsPerPage = PageSize,
-                TotalItems = _repository.GetItems.Count()
+                TotalItems = unitOfWork.ItemRepository.Get().Count()
             };
             ViewBag.pagingInfo = pagingInfo;
-            return View(_repository.GetItems.OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize));
+            return View(unitOfWork.ItemRepository.Get().OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize));
         }
 
         //
@@ -39,7 +39,7 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            var item = _repository.GetItem(id);
+            var item = unitOfWork.ItemRepository.GetById(id);
             if (item == null)
             {
                 return HttpNotFound();
@@ -52,7 +52,7 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.SectionSelect = new SelectList(_sectionRepository.GetSections.ToList(), "Id", "Name");
+            ViewBag.SectionSelect = new SelectList(unitOfWork.SectionRepository.Get(), "Id", "Name");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace Classifieds.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                _repository.Create(item);
+                unitOfWork.ItemRepository.Insert(item);
                 return RedirectToAction("Index");
             }
 
@@ -76,7 +76,7 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            var item = _repository.GetItem(id);
+            var item = unitOfWork.ItemRepository.GetById(id);
             if (item == null)
             {
                 return HttpNotFound();
@@ -93,7 +93,7 @@ namespace Classifieds.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                _repository.Edit(item);
+                unitOfWork.ItemRepository.Update(item);
                 return RedirectToAction("Index");
             }
 
@@ -105,7 +105,7 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            var item = _repository.GetItem(id);
+            var item = unitOfWork.ItemRepository.GetById(id);
 
             if (item == null)
             {
@@ -120,7 +120,7 @@ namespace Classifieds.WebUI.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            _repository.Delete(id);
+            unitOfWork.ItemRepository.Delete(id);
             return RedirectToAction("Index");
         }
     }
