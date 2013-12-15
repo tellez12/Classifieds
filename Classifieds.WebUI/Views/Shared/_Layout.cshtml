@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Classifieds.WebUI.Helpers
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -31,9 +32,16 @@
         <div id="body">
             @RenderSection("featured", required: false)
             <section class="content-wrapper main-content clear-fix">
-                @RenderBody()
+        
+                <div class="content">
+                    @RenderBody()
+                </div>
+                <div class="menu">
+                    @MenuHelper.AdminMenu(@Html)
+                </div>
             </section>
         </div>
+    
         <footer>
             <div class="content-wrapper">
                 <div class="float-left">

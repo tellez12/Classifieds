@@ -754,3 +754,16 @@ tr.pager td {
             margin: 0;
         }
 }
+
+
+.content
+{
+    float:right;
+  width:60%;
+    clear:both;
+}
+
+.container
+{
+    width:100%;
+}
