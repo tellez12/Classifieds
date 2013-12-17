@@ -1,4 +1,20 @@
 ﻿@model Classifieds.WebUI.ViewModels.ItemTypeFeatureViewModel
 
+@foreach (var sec in Model.Sections)
+{
+    <div class="@sec.Name">
+        
+        @sec.Name
 
-@Model.ItemTypeId
+         @foreach (var item in sec.Features)
+         {
+           <div class="editor-label">
+            @Html.Label(item.Name)
+        </div>
+        <div class="editor-field">
+            @item.ControlType
+        </div>
+         }
+        
+    </div>
+}

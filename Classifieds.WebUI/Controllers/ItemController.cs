@@ -4,9 +4,9 @@ using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using Classifieds.Domain.Abstract;
 using Classifieds.Domain.Entities;
+using Classifieds.Domain.UOW;
 using Classifieds.WebUI.ViewModels;
 using Classifieds.WebUI.ViewModels.Shared;
-using Classifieds.Domain.UOW;
 
 namespace Classifieds.WebUI.Controllers
 {
@@ -54,7 +54,6 @@ namespace Classifieds.WebUI.Controllers
         public ActionResult Create()
         {
             return View(new ItemViewModel(unitOfWork));
-           
         }
 
         //
@@ -127,8 +126,8 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult GetFeatureTypePartial(int itemTypeId)
         {
-            var model = new ItemTypeFeatureViewModel(itemTypeId);
-            return PartialView("_ItemTypeFeatures",model);
+            var model = new ItemTypeFeatureViewModel(itemTypeId, unitOfWork);
+            return PartialView("_ItemTypeFeatures", model);
         }
     }
 }
