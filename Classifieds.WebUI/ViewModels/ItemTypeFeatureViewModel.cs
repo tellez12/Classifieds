@@ -17,7 +17,7 @@ namespace Classifieds.WebUI.ViewModels
         {
             ItemTypeId = myItemTypeId;
             unitOfWork = myUnitOfWork;
-            unitOfWork.SectionRepository.Get(includeProperties: "Features");
+            Sections = unitOfWork.SectionRepository.Get(includeProperties: "Features").ToList();
 
             foreach (var item in Sections)
             {
