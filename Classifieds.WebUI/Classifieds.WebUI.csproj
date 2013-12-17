@@ -194,6 +194,8 @@
     <Compile Include="Controllers\SectionController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\FeatureTypeViewModel.cs" />
+    <Compile Include="ViewModels\ItemTypeFeatureViewModel.cs" />
+    <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\Shared\PagingInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -351,6 +353,7 @@
     <Content Include="Views\ItemType\Details.cshtml" />
     <Content Include="Views\ItemType\Edit.cshtml" />
     <Content Include="Views\ItemType\Index.cshtml" />
+    <Content Include="Views\Item\_ItemTypeFeatures.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,4 +1,4 @@
-﻿@model Classifieds.Domain.Entities.Item
+﻿@model Classifieds.WebUI.ViewModels.ItemViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -13,7 +13,7 @@
     <fieldset>
         <legend>Item</legend>       
 
-        <div class="editor-label">
+        @*<div class="editor-label">
             @Html.LabelFor(model => model.Price)
         </div>
         <div class="editor-field">
@@ -27,20 +27,25 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.Comment)
             @Html.ValidationMessageFor(model => model.Comment)
+        </div>*@
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ItemType)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.ItemType, Model.ItemTypeSelect)
+        
+
+        </div>
+        
+       
+        <div id="Features">
+          
+
+
         </div>
 
-        @foreach (Section item in ViewBag.SectionSelect)
-        {
-            <div id="section@item.Name">
-               @foreach (var feature in item.Features)
-               {
-                   
-  
-               }
-
-            </div>
-            
-        }
+   
 
 
         <p>
@@ -55,4 +60,22 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $('#ItemType').change(function () {
+
+            /* Get the selected value of dropdownlist */
+            var selectedID = $(this).val();
+            var actionUrl = '@Url.Action("GetFeatureTypePartial")';
+            /* Request the partial view with .get request. */
+            $.get(actionUrl + '?itemTypeId=' + selectedID, function (data) {
+                /* data is the pure html returned from action method, load it to your page */
+                $('#Features').html(data);
+                /* little fade in effect */
+                $('#Features').fadeIn('fast');
+            });
+
+        });
+
+    </script>
 }

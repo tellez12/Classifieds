@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using Classifieds.Domain.Abstract;
 using Classifieds.Domain.Entities;
+using Classifieds.WebUI.ViewModels;
 using Classifieds.WebUI.ViewModels.Shared;
 using Classifieds.Domain.UOW;
 
@@ -52,8 +53,8 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.SectionSelect = new SelectList(unitOfWork.SectionRepository.Get(), "Id", "Name");
-            return View();
+            return View(new ItemViewModel(unitOfWork));
+           
         }
 
         //
@@ -68,7 +69,7 @@ namespace Classifieds.WebUI.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(item);
+            return View();
         }
 
         //
@@ -122,6 +123,12 @@ namespace Classifieds.WebUI.Controllers
         {
             unitOfWork.ItemRepository.Delete(id);
             return RedirectToAction("Index");
+        }
+
+        public ActionResult GetFeatureTypePartial(int itemTypeId)
+        {
+            var model = new ItemTypeFeatureViewModel(itemTypeId);
+            return PartialView("_ItemTypeFeatures",model);
         }
     }
 }

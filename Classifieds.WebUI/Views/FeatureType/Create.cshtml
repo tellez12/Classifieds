@@ -67,18 +67,7 @@
         <div class="editor-field">
          
             @Html.ListBoxFor(model=>model.ItemTypes , Model.ItemTypeSelect)
-          @*  <ul>
-                @foreach (ItemType itemType in ViewBag.ItemTypeList)
-                {
-                    <li>
-
-                        <input type="checkbox" name="ItemTypes" value="@itemType.Id" />
-
-                        @itemType.Name
-                    </li>
-                }
-                @Html.ValidationMessageFor(model => model.ItemTypes)
-            </ul>*@
+       
         </div>
 
         <p>
