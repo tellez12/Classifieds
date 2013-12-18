@@ -41,9 +41,9 @@ namespace Classifieds.WebUI.ViewModels
         {
         }
 
-        public FeatureTypeViewModel(FeatureType ft,IUnitOfWork myUnitOfWork)
+        public FeatureTypeViewModel(FeatureType ft, IUnitOfWork myUnitOfWork)
         {
-            SetRepositories( myUnitOfWork);
+            SetRepositories(myUnitOfWork);
 
             Id = ft.Id;
             Name = ft.Name;
@@ -59,19 +59,18 @@ namespace Classifieds.WebUI.ViewModels
         public void SetRepositories(IUnitOfWork myUnitOfWork)
         {
             unitOfWork = myUnitOfWork;
-
         }
 
         public FeatureTypeViewModel(IUnitOfWork myUnitOfWork)
         {
-            SetRepositories( myUnitOfWork);
+            SetRepositories(myUnitOfWork);
             FillSelectList();
         }
 
         private void FillSelectList()
         {
             SectionSelect = new SelectList(unitOfWork.SectionRepository.Get().ToList(), "Id", "Name", SectionId);
-            ItemTypeSelect = new SelectList(unitOfWork.ItemTypeRepository.Get().ToList(), "Id", "Name", ItemTypes);
+            ItemTypeSelect = new SelectList(unitOfWork.ItemTypeRepository.Get(orderBy: q => q.OrderBy(d => d.Name)).ToList(), "Id", "Name", ItemTypes);
 
             var typeEnumSelect = from ControlType s in Enum.GetValues(typeof(ControlType))
                                  select new { ID = (int)s, Name = s.ToString() };

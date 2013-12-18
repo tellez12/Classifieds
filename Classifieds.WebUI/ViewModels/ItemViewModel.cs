@@ -1,10 +1,10 @@
-﻿using Classifieds.Domain.Entities;
-using Classifieds.Domain.UOW;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Classifieds.Domain.Entities;
+using Classifieds.Domain.UOW;
 
 namespace Classifieds.WebUI.ViewModels
 {
@@ -14,16 +14,16 @@ namespace Classifieds.WebUI.ViewModels
 
         public SelectList ItemTypeSelect { get; set; }
 
-            private IUnitOfWork unitOfWork;
+        private IUnitOfWork unitOfWork;
 
-            public void SetRepositories(IUnitOfWork myUnitOfWork)
+        public void SetRepositories(IUnitOfWork myUnitOfWork)
         {
             unitOfWork = myUnitOfWork;
         }
 
-            public ItemViewModel(IUnitOfWork myUnitOfWork)
+        public ItemViewModel(IUnitOfWork myUnitOfWork)
         {
-            SetRepositories( myUnitOfWork);
+            SetRepositories(myUnitOfWork);
             FillSelectList();
         }
 
@@ -31,7 +31,6 @@ namespace Classifieds.WebUI.ViewModels
         {
             //SectionSelect = new SelectList(unitOfWork.SectionRepository.Get().ToList(), "Id", "Name", SectionId);
             ItemTypeSelect = new SelectList(unitOfWork.ItemTypeRepository.Get().ToList(), "Id", "Name");
-            
         }
     }
 }

@@ -9,6 +9,7 @@ namespace Classifieds.Domain.EF
         public MyContext()
             : base("DefaultConnection")
         {
+            this.Configuration.LazyLoadingEnabled = true;
         }
 
         public DbSet<Currency> Currencies { get; set; }

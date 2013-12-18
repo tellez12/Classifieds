@@ -9,7 +9,10 @@ namespace Classifieds.Domain.Utils
         TextBoxInt = 1,
         TextBoxReal = 2,
         TextBox = 3,
-        DropDown = 4
+        TextBoxEmail = 4,
+        TextArea = 5,
+        DropDown = 6,
+        Date = 7
     }
 
     public static class ControlTypeExtensions

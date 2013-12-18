@@ -13,9 +13,8 @@ namespace Classifieds.WebUI.Controllers
 {
     public class FeatureTypeController : Controller
     {
-
-        IUnitOfWork unitOfWork;
-        public int PageSize = 4;
+        private IUnitOfWork unitOfWork;
+        public int PageSize = 40;
 
         public FeatureTypeController(IUnitOfWork myUnitOfWork)
         {
@@ -34,7 +33,7 @@ namespace Classifieds.WebUI.Controllers
                                      TotalItems = unitOfWork.FeatureTypeRepository.Get().Count()
                                  };
             ViewBag.pagingInfo = pagingInfo;
-            return View(unitOfWork.FeatureTypeRepository.Get(includeProperties:"Section,ItemTypes").OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize));
+            return View(unitOfWork.FeatureTypeRepository.Get(includeProperties: "Section,ItemTypes").OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize));
         }
 
         //
@@ -106,7 +105,7 @@ namespace Classifieds.WebUI.Controllers
             {
                 featureType.ControlType = typeDD;
                 unitOfWork.FeatureTypeRepository.Update(featureType);
-                unitOfWork.Save();  
+                unitOfWork.Save();
                 return RedirectToAction("Index");
             }
 

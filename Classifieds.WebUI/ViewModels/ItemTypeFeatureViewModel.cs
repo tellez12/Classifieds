@@ -7,34 +7,22 @@ namespace Classifieds.WebUI.ViewModels
 {
     public class ItemTypeFeatureViewModel
     {
-        public int ItemTypeId { get; set; }
-
         private IUnitOfWork unitOfWork;
 
         public List<Section> Sections { get; set; }
 
         public ItemTypeFeatureViewModel(int myItemTypeId, IUnitOfWork myUnitOfWork)
         {
-            ItemTypeId = myItemTypeId;
             unitOfWork = myUnitOfWork;
             Sections = unitOfWork.SectionRepository.Get(includeProperties: "Features").ToList();
 
             foreach (var item in Sections)
             {
-                var x = new List<FeatureType>();
-                foreach (var feature in item.Features)
-                {
-                    foreach (var itemType in feature.ItemTypes)
-                    {
-                        if (itemType.Id == ItemTypeId)
-                        {
-                            x.Add(feature);
-                            break;
-                        }
-                    }
-                }
-                item.Features = x;
+                item.Features = item.Features
+                    .Where(f => f.ItemTypes.Any(i => i.Id == myItemTypeId))
+                    .ToList();
             }
+            Sections = Sections.Where(s => s.Features.Count() > 0).ToList();
         }
     }
 }
