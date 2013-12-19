@@ -14,7 +14,6 @@ namespace Classifieds.WebUI.Controllers
     public class FeatureTypeController : Controller
     {
         private IUnitOfWork unitOfWork;
-        public int PageSize = 40;
 
         public FeatureTypeController(IUnitOfWork myUnitOfWork)
         {
@@ -26,14 +25,10 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Index(int page = 1)
         {
-            var pagingInfo = new PagingInfo
-                                 {
-                                     CurrentPage = page,
-                                     ItemsPerPage = PageSize,
-                                     TotalItems = unitOfWork.FeatureTypeRepository.Get().Count()
-                                 };
+            var pagingInfo = new PagingInfo(page, unitOfWork.FeatureTypeRepository.Get().Count());
+
             ViewBag.pagingInfo = pagingInfo;
-            return View(unitOfWork.FeatureTypeRepository.Get(includeProperties: "Section,ItemTypes").OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize));
+            return View(unitOfWork.FeatureTypeRepository.Get(includeProperties: "Section,ItemTypes").OrderBy(p => p.Id).Skip((page - 1) * pagingInfo.ItemsPerPage).Take(pagingInfo.ItemsPerPage));
         }
 
         //

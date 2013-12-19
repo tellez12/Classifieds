@@ -18,17 +18,13 @@ namespace Classifieds.WebUI.Controllers
         {
             this.unitOfWork = myUnitOfWork;
         }
+
         //
         // GET: /Section/
 
         public ActionResult Index(int page = 1)
         {
-            var pagingInfo = new PagingInfo
-                                 {
-                                     CurrentPage = page,
-                                     ItemsPerPage = PageSize,
-                                     TotalItems = unitOfWork.SectionRepository.Get().Count()
-                                 };
+            var pagingInfo = new PagingInfo(page, unitOfWork.SectionRepository.Get().Count());
             ViewBag.pagingInfo = pagingInfo;
             return View(unitOfWork.SectionRepository.Get().OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize));
         }

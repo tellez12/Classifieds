@@ -13,7 +13,6 @@ namespace Classifieds.WebUI.Controllers
     public class ItemController : Controller
     {
         private IUnitOfWork unitOfWork;
-        public int PageSize = 4;
 
         public ItemController(IUnitOfWork myUnitOfWork)
         {
@@ -25,14 +24,10 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Index(int page = 1)
         {
-            var pagingInfo = new PagingInfo
-            {
-                CurrentPage = page,
-                ItemsPerPage = PageSize,
-                TotalItems = unitOfWork.ItemRepository.Get().Count()
-            };
+            var pagingInfo = new PagingInfo(page, unitOfWork.ItemRepository.Get().Count());
+
             ViewBag.pagingInfo = pagingInfo;
-            return View(unitOfWork.ItemRepository.Get().OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize));
+            return View(unitOfWork.ItemRepository.Get().OrderBy(p => p.Id).Skip((page - 1) * pagingInfo.ItemsPerPage).Take(pagingInfo.ItemsPerPage));
         }
 
         //

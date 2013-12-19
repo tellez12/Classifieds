@@ -11,7 +11,6 @@ namespace Classifieds.WebUI.Controllers
     public class CurrencyController : Controller
     {
         private IUnitOfWork unitOfWork;
-        public int pageSize = 4;
 
         public CurrencyController(IUnitOfWork myUnitOfWork)
         {
@@ -23,15 +22,10 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Index(int page = 1)
         {
-            PagingInfo pagingInfo = new PagingInfo
-                                    {
-                                        CurrentPage = page,
-                                        ItemsPerPage = pageSize,
-                                        TotalItems = unitOfWork.CurrencyRepository.Get().Count()
-                                    };
+            PagingInfo pagingInfo = new PagingInfo(page, unitOfWork.CurrencyRepository.Get().Count());
 
             ViewBag.pagingInfo = pagingInfo;
-            return View(unitOfWork.CurrencyRepository.Get().OrderBy(p => p.Id).Skip((page - 1) * pageSize).Take(pageSize));
+            return View(unitOfWork.CurrencyRepository.Get().OrderBy(p => p.Id).Skip((page - 1) * pagingInfo.ItemsPerPage).Take(pagingInfo.ItemsPerPage));
         }
 
         //
