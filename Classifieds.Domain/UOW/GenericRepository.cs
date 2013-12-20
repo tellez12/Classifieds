@@ -38,14 +38,7 @@ namespace Classifieds.Domain.UOW
                 query = query.Include(includeProperty);
             }
 
-            if (orderBy != null)
-            {
-                return orderBy(query).ToList();
-            }
-            else
-            {
-                return query.ToList();
-            }
+            return orderBy != null ? orderBy(query).ToList() : query.ToList();
         }
 
         public virtual TEntity GetById(object id)
@@ -56,7 +49,7 @@ namespace Classifieds.Domain.UOW
         public virtual void Insert(TEntity entity)
         {
             dbSet.Add(entity);
-            context.SaveChanges();
+     
         }
 
         public virtual void Delete(object id)
@@ -73,14 +66,14 @@ namespace Classifieds.Domain.UOW
             }
 
             dbSet.Remove(entityToDelete);
-            context.SaveChanges();
+      
         }
 
         public virtual void Update(TEntity entityToUpdate)
         {
             dbSet.Attach(entityToUpdate);
             context.Entry(entityToUpdate).State = EntityState.Modified;
-            context.SaveChanges();
+
         }
     }
 }

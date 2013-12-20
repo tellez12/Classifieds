@@ -13,7 +13,7 @@ namespace Classifieds.WebUI.Controllers
 {
     public class FeatureTypeController : Controller
     {
-        private IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork unitOfWork;
 
         public FeatureTypeController(IUnitOfWork myUnitOfWork)
         {

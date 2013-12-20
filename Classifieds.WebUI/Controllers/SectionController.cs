@@ -11,8 +11,8 @@ namespace Classifieds.WebUI.Controllers
 {
     public class SectionController : Controller
     {
-        private IUnitOfWork unitOfWork;
-        public int PageSize = 4;
+        private readonly IUnitOfWork unitOfWork;
+        
 
         public SectionController(IUnitOfWork myUnitOfWork)
         {
@@ -26,7 +26,7 @@ namespace Classifieds.WebUI.Controllers
         {
             var pagingInfo = new PagingInfo(page, unitOfWork.SectionRepository.Get().Count());
             ViewBag.pagingInfo = pagingInfo;
-            return View(unitOfWork.SectionRepository.Get().OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize));
+            return View(unitOfWork.SectionRepository.Get().OrderBy(p => p.Id).Skip((page - 1) * pagingInfo.ItemsPerPage).Take(pagingInfo.ItemsPerPage));
         }
 
         //
@@ -59,6 +59,7 @@ namespace Classifieds.WebUI.Controllers
             if (ModelState.IsValid)
             {
                 unitOfWork.SectionRepository.Insert(section);
+                unitOfWork.Save();
                 return RedirectToAction("Index");
             }
 
@@ -88,6 +89,7 @@ namespace Classifieds.WebUI.Controllers
             if (ModelState.IsValid)
             {
                 unitOfWork.SectionRepository.Update(section);
+                unitOfWork.Save();
                 return RedirectToAction("Index");
             }
 
@@ -115,6 +117,7 @@ namespace Classifieds.WebUI.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             unitOfWork.SectionRepository.Delete(id);
+            unitOfWork.Save();
             return RedirectToAction("Index");
         }
     }

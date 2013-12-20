@@ -10,7 +10,7 @@ namespace Classifieds.WebUI.Controllers
 {
     public class CurrencyController : Controller
     {
-        private IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork unitOfWork;
 
         public CurrencyController(IUnitOfWork myUnitOfWork)
         {
@@ -53,15 +53,16 @@ namespace Classifieds.WebUI.Controllers
         // POST: /Currency/Create
 
         [HttpPost]
-        public ActionResult Create(Currency Currency)
+        public ActionResult Create(Currency currency)
         {
             if (ModelState.IsValid)
             {
-                unitOfWork.CurrencyRepository.Insert(Currency);
+                unitOfWork.CurrencyRepository.Insert(currency);
+                unitOfWork.Save();
                 return RedirectToAction("Index");
             }
 
-            return View(Currency);
+            return View(currency);
         }
 
         //
@@ -69,28 +70,28 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            Currency Currency = unitOfWork.CurrencyRepository.GetById(id);
-            if (Currency == null)
+            Currency currency = unitOfWork.CurrencyRepository.GetById(id);
+            if (currency == null)
             {
                 return HttpNotFound();
             }
 
-            return View(Currency);
+            return View(currency);
         }
 
         //
         // POST: /Currency/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(Currency Currency)
+        public ActionResult Edit(Currency currency)
         {
             if (ModelState.IsValid)
             {
-                unitOfWork.CurrencyRepository.Update(Currency);
+                unitOfWork.CurrencyRepository.Update(currency);
                 return RedirectToAction("Index");
             }
 
-            return View(Currency);
+            return View(currency);
         }
 
         //
@@ -98,13 +99,13 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            Currency Currency = unitOfWork.CurrencyRepository.GetById(id);
+            Currency currency = unitOfWork.CurrencyRepository.GetById(id);
 
-            if (Currency == null)
+            if (currency == null)
             {
                 return HttpNotFound();
             }
-            return View(Currency);
+            return View(currency);
         }
 
         //

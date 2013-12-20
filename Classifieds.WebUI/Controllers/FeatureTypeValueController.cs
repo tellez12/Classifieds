@@ -10,7 +10,7 @@ namespace Classifieds.WebUI.Controllers
 {
     public class FeatureTypeValueController : Controller
     {
-        private IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork unitOfWork;
 
         public FeatureTypeValueController(IUnitOfWork myUnitOfWork)
         {
@@ -22,7 +22,7 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Index(int page = 1)
         {
-            PagingInfo pagingInfo = new PagingInfo(page, unitOfWork.FeatureTypeValueRepository.Get().Count());
+            var pagingInfo = new PagingInfo(page, unitOfWork.FeatureTypeValueRepository.Get().Count());
 
             ViewBag.pagingInfo = pagingInfo;
             return View(unitOfWork.FeatureTypeValueRepository.Get().OrderBy(p => p.Id).Skip((page - 1) * pagingInfo.ItemsPerPage).Take(pagingInfo.ItemsPerPage));
@@ -58,6 +58,7 @@ namespace Classifieds.WebUI.Controllers
             if (ModelState.IsValid)
             {
                 unitOfWork.FeatureTypeValueRepository.Insert(featureTypeValue);
+                unitOfWork.Save();
                 return RedirectToAction("Index");
             }
 
@@ -82,15 +83,16 @@ namespace Classifieds.WebUI.Controllers
         // POST: /FeatureTypeValue/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(FeatureTypeValue FeatureTypeValue)
+        public ActionResult Edit(FeatureTypeValue featureTypeValue)
         {
             if (ModelState.IsValid)
             {
-                unitOfWork.FeatureTypeValueRepository.Update(FeatureTypeValue);
+                unitOfWork.FeatureTypeValueRepository.Update(featureTypeValue);
+                unitOfWork.Save();
                 return RedirectToAction("Index");
             }
 
-            return View(FeatureTypeValue);
+            return View(featureTypeValue);
         }
 
         //
@@ -114,6 +116,7 @@ namespace Classifieds.WebUI.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             unitOfWork.FeatureTypeValueRepository.Delete(id);
+            unitOfWork.Save();
             return RedirectToAction("Index");
         }
     }

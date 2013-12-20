@@ -10,7 +10,7 @@ namespace Classifieds.WebUI.Controllers
 {
     public class ItemTypeController : Controller
     {
-        private IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork unitOfWork;
 
         public ItemTypeController(IUnitOfWork myUnitOfWork)
         {
@@ -57,6 +57,7 @@ namespace Classifieds.WebUI.Controllers
             if (ModelState.IsValid)
             {
                 unitOfWork.ItemTypeRepository.Insert(itemType);
+                unitOfWork.Save();
                 return RedirectToAction("Index");
             }
 
@@ -86,6 +87,7 @@ namespace Classifieds.WebUI.Controllers
             if (ModelState.IsValid)
             {
                 unitOfWork.ItemTypeRepository.Update(itemType);
+                unitOfWork.Save();
                 return RedirectToAction("Index");
             }
 
@@ -113,6 +115,7 @@ namespace Classifieds.WebUI.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             unitOfWork.ItemTypeRepository.Delete(id);
+            unitOfWork.Save();
             return RedirectToAction("Index");
         }
     }

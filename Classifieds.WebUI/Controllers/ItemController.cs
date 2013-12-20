@@ -60,6 +60,7 @@ namespace Classifieds.WebUI.Controllers
             if (ModelState.IsValid)
             {
                 unitOfWork.ItemRepository.Insert(item);
+                unitOfWork.Save();
                 return RedirectToAction("Index");
             }
 
@@ -89,6 +90,7 @@ namespace Classifieds.WebUI.Controllers
             if (ModelState.IsValid)
             {
                 unitOfWork.ItemRepository.Update(item);
+                unitOfWork.Save();
                 return RedirectToAction("Index");
             }
 
@@ -116,6 +118,7 @@ namespace Classifieds.WebUI.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             unitOfWork.ItemRepository.Delete(id);
+            unitOfWork.Save();
             return RedirectToAction("Index");
         }
 
