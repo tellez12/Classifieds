@@ -1,6 +1,6 @@
 ﻿@model Classifieds.WebUI.ViewModels.ItemTypeFeatureViewModel
 @using Classifieds.WebUI.Helpers;
-
+@{ int cont = 0; }
 @foreach (var sec in Model.Sections)
 {
     <div class="@sec.Name">
@@ -13,7 +13,7 @@
             @Html.Label(item.Name)
         </div>
         <div class="editor-field">
-            @DynamicControlHelper.GetControl(@Html,item)           
+            @DynamicControlHelper.GetControl(@Html,item,cont++)           
         </div>
          }
         

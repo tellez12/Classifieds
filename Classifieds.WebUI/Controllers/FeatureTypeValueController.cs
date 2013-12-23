@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using Classifieds.Domain.Abstract;
 using Classifieds.Domain.Entities;
 using Classifieds.Domain.UOW;
+using Classifieds.WebUI.ViewModels;
 using Classifieds.WebUI.ViewModels.Shared;
 
 namespace Classifieds.WebUI.Controllers
@@ -25,7 +26,7 @@ namespace Classifieds.WebUI.Controllers
             var pagingInfo = new PagingInfo(page, unitOfWork.FeatureTypeValueRepository.Get().Count());
 
             ViewBag.pagingInfo = pagingInfo;
-            return View(unitOfWork.FeatureTypeValueRepository.Get().OrderBy(p => p.Id).Skip((page - 1) * pagingInfo.ItemsPerPage).Take(pagingInfo.ItemsPerPage));
+            return View(unitOfWork.FeatureTypeValueRepository.Get(includeProperties:"Type").OrderBy(p => p.Id).Skip((page - 1) * pagingInfo.ItemsPerPage).Take(pagingInfo.ItemsPerPage));
         }
 
         //
@@ -46,18 +47,18 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            return View(new FeatureTypeValueViewModel(unitOfWork));
         }
 
         //
         // POST: /FeatureTypeValue/Create
 
         [HttpPost]
-        public ActionResult Create(FeatureTypeValue featureTypeValue)
+        public ActionResult Create(FeatureTypeValueViewModel featureTypeValue)
         {
             if (ModelState.IsValid)
             {
-                unitOfWork.FeatureTypeValueRepository.Insert(featureTypeValue);
+                unitOfWork.FeatureTypeValueRepository.Insert(featureTypeValue.ToModel());
                 unitOfWork.Save();
                 return RedirectToAction("Index");
             }
@@ -70,13 +71,13 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            FeatureTypeValue FeatureTypeValue = unitOfWork.FeatureTypeValueRepository.GetById(id);
-            if (FeatureTypeValue == null)
+            FeatureTypeValue featureTypeValue = unitOfWork.FeatureTypeValueRepository.GetById(id);
+            if (featureTypeValue == null)
             {
                 return HttpNotFound();
             }
 
-            return View(FeatureTypeValue);
+            return View(featureTypeValue);
         }
 
         //

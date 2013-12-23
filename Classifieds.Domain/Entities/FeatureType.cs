@@ -23,7 +23,7 @@ namespace Classifieds.Domain.Entities
 
         [ForeignKey("SectionId")]
         public Section Section { get; set; }
-
         public virtual List<ItemType> ItemTypes { set; get; }
+        public virtual List<FeatureTypeValue> Values { set; get; }
     }
 }

@@ -5,50 +5,52 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Classifieds.Domain.Entities;
+using Classifieds.Domain.Utils;
 
 namespace Classifieds.WebUI.Helpers
 {
     public class DynamicControlHelper
     {
-        public static MvcHtmlString GetControl(HtmlHelper htmlHelper, FeatureType featureType)
+        public static MvcHtmlString GetControl(HtmlHelper htmlHelper, FeatureType featureType,int cont )
         {
             var builder = new StringBuilder();
+            builder.AppendFormat("<input type='hidden' value='{0}' name='feature[{1}].Id' id='feature[{1}].Id'/> ", featureType.Id, cont);
             switch (featureType.ControlType)
             {
-                case Classifieds.Domain.Utils.ControlType.CheckBox:
+                case ControlType.CheckBox:
                     builder.AppendLine("CheckBox Not Implemented");
                     break;
 
-                case Classifieds.Domain.Utils.ControlType.TextBoxInt:
-                    builder.AppendLine(string.Format("<input type=\"number\" step=\"1\" />"));
+                case ControlType.TextBoxInt:
+                    builder.AppendLine(string.Format("<input type=\"number\" step=\"1\" name='feature[{0}].Value' id='feature[{0}].Value'/>",cont));
                     break;
 
-                case Classifieds.Domain.Utils.ControlType.TextBoxReal:
-                    builder.AppendLine(string.Format("<input type=\"number\" step=\"any\" />"));
+                case ControlType.TextBoxReal:
+                    builder.AppendLine(string.Format("<input type=\"number\" step=\"any\" name='feature[{0}].Value' id='feature[{0}].Value'/>", cont));
                     break;
 
-                case Classifieds.Domain.Utils.ControlType.TextBox:
+                case ControlType.TextBox:
 
-                    builder.AppendLine(string.Format("<input type=\"text\"/>"));
+                    builder.AppendLine(string.Format("<input type=\"text\"name='feature[{0}].Value' id='feature[{0}].Value'/>", cont));
                     break;
 
-                case Classifieds.Domain.Utils.ControlType.Date:
+                case ControlType.Date:
 
-                    builder.AppendLine(string.Format("<input type=\"date\" />"));
+                    builder.AppendLine(string.Format("<input type=\"date\" name='feature[{0}].Value' id='feature[{0}].Value'/>", cont));
                     break;
 
-                case Classifieds.Domain.Utils.ControlType.TextArea:
+                case ControlType.TextArea:
 
-                    builder.AppendLine(string.Format("​<textarea id=\"txtArea\" rows=\"5\"  />"));
+                    builder.AppendLine(string.Format("​<textarea id=\"txtArea\" rows=\"5\" name='feature[{0}].Value' id='feature[{0}].Value'/>", cont));
                     break;
 
-                case Classifieds.Domain.Utils.ControlType.TextBoxEmail:
+                case ControlType.TextBoxEmail:
 
-                    builder.AppendLine(string.Format("<input type=\"email\"  />"));
+                    builder.AppendLine(string.Format("<input type=\"email\" name='feature[{0}].Value' id='feature[{0}].Value'/>", cont));
                     break;
 
-                case Classifieds.Domain.Utils.ControlType.DropDown:
-                    builder.AppendLine("DropDown Not Implemented");
+                case ControlType.DropDown:
+                    builder.AppendLine(GetDropDownControl(featureType,cont));
                     break;
 
                 default:
@@ -57,6 +59,18 @@ namespace Classifieds.WebUI.Helpers
             }
 
             return MvcHtmlString.Create(builder.ToString());
+        }
+
+        private static string GetDropDownControl(FeatureType featureType,int cont )
+        {
+            var builder = new StringBuilder();
+            builder.AppendFormat("<Select name='feature[{0}].Value' id='feature[{0}].Value/>",cont);
+
+            foreach (var value in featureType.Values)
+            {
+                builder.AppendFormat("<option value='{0}'>{1}</option>",value.Id,value.Value);
+            }
+            return builder.ToString();
         }
     }
 }

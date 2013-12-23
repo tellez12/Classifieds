@@ -33,12 +33,12 @@ namespace Classifieds.WebUI.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            Currency Currency = unitOfWork.CurrencyRepository.GetById(id);
-            if (Currency == null)
+            Currency currency = unitOfWork.CurrencyRepository.GetById(id);
+            if (currency == null)
             {
                 return HttpNotFound();
             }
-            return View(Currency);
+            return View(currency);
         }
 
         //

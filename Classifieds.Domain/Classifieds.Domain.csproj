@@ -105,6 +105,10 @@
     <Compile Include="Migrations\201312110047145_test2.Designer.cs">
       <DependentUpon>201312110047145_test2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201312212304130_FeatureType-Values.cs" />
+    <Compile Include="Migrations\201312212304130_FeatureType-Values.Designer.cs">
+      <DependentUpon>201312212304130_FeatureType-Values.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UOW\GenericRepository.cs" />
@@ -141,6 +145,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201312110047145_test2.resx">
       <DependentUpon>201312110047145_test2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201312212304130_FeatureType-Values.resx">
+      <DependentUpon>201312212304130_FeatureType-Values.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -28,7 +28,7 @@ namespace Classifieds.WebUI.Controllers
             var pagingInfo = new PagingInfo(page, unitOfWork.FeatureTypeRepository.Get().Count());
 
             ViewBag.pagingInfo = pagingInfo;
-            return View(unitOfWork.FeatureTypeRepository.Get(includeProperties: "Section,ItemTypes").OrderBy(p => p.Id).Skip((page - 1) * pagingInfo.ItemsPerPage).Take(pagingInfo.ItemsPerPage));
+            return View(unitOfWork.FeatureTypeRepository.Get(includeProperties: "Section").OrderBy(p => p.Id).Skip((page - 1) * pagingInfo.ItemsPerPage).Take(pagingInfo.ItemsPerPage));
         }
 
         //

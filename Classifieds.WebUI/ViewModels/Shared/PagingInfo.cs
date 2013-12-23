@@ -4,7 +4,7 @@ namespace Classifieds.WebUI.ViewModels.Shared
 {
     public class PagingInfo
     {
-        private const int defaultItemsPerPage = 20;
+        private const int DefaultItemsPerPage = 20;
 
         public int TotalItems { get; set; }
 
@@ -12,8 +12,11 @@ namespace Classifieds.WebUI.ViewModels.Shared
 
         public int CurrentPage { get; set; }
 
-        public PagingInfo(int totalItems, int currentPage, int itemsPerPage = defaultItemsPerPage)
+        public PagingInfo(int totalItems, int currentPage, int itemsPerPage = DefaultItemsPerPage)
         {
+            TotalItems = TotalItems;
+            CurrentPage = currentPage;
+            ItemsPerPage = itemsPerPage;
         }
 
         public int TotalPages
