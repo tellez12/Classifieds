@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Classifieds.WebUI
+﻿namespace Classifieds.WebUI
 {
     public static class AuthConfig
     {
