@@ -60,7 +60,7 @@ namespace Classifieds.WebUI.Controllers
             {
                 featureType.SetRepositories(unitOfWork);
                 unitOfWork.FeatureTypeRepository.Insert(featureType.ToModel());
-                unitOfWork.Save();
+
                 return RedirectToAction("Index");
             }
 
