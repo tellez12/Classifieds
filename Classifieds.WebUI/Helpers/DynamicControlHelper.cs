@@ -14,7 +14,8 @@ namespace Classifieds.WebUI.Helpers
             switch (featureType.ControlType)
             {
                 case ControlType.CheckBox:
-                    builder.AppendLine("CheckBox Not Implemented");
+                    
+                      builder.AppendLine(string.Format("<input type=\"checkbox\" name='feature[{0}].Value' id='feature[{0}].Value'/>",cont));
                     break;
 
                 case ControlType.TextBoxInt:
@@ -60,12 +61,14 @@ namespace Classifieds.WebUI.Helpers
         private static string GetDropDownControl(FeatureType featureType,int cont )
         {
             var builder = new StringBuilder();
-            builder.AppendFormat("<Select name='feature[{0}].Value' id='feature[{0}].Value/>",cont);
+            builder.AppendFormat("<Select name='feature[{0}].Value' id='feature[{0}].Value>",cont);
 
             foreach (var value in featureType.Values)
             {
                 builder.AppendFormat("<option value='{0}'>{1}</option>",value.Id,value.Value);
             }
+
+            builder.AppendFormat("</select>");
             return builder.ToString();
         }
     }

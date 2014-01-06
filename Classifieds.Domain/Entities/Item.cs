@@ -21,10 +21,10 @@ namespace Classifieds.Domain.Entities
         public virtual List<Picture> Pictures { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime PublishDate { get; set; }
+        public DateTime? PublishDate { get; set; }
 
-        public DateTime LastUpdateDate { get; set; }
+        public DateTime? LastUpdateDate { get; set; }
 
-        public DateTime AdquiredDate { get; set; }
+        public DateTime? AdquiredDate { get; set; }
     }
 }

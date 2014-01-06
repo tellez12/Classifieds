@@ -52,16 +52,20 @@ namespace Classifieds.WebUI.Controllers
         // POST: /Item/Create
 
         [HttpPost]
-        public ActionResult Create(Item item)
+        public ActionResult Create(ItemViewModel item)
         {
             if (ModelState.IsValid)
             {
-                unitOfWork.ItemRepository.Insert(item);
+                item.SetRepositories(unitOfWork);
+                unitOfWork.ItemRepository.Insert(item.ToModel());
                 unitOfWork.Save();
                 return RedirectToAction("Index");
             }
+            else
+            {
+                return View(item);
+            }
 
-            return View();
         }
 
         //

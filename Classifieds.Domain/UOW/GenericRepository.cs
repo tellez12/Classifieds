@@ -54,7 +54,7 @@ namespace Classifieds.Domain.UOW
 
         public virtual void Delete(object id)
         {
-            TEntity entityToDelete = dbSet.Find(id);
+            var entityToDelete = dbSet.Find(id);
             Delete(entityToDelete);
         }
 

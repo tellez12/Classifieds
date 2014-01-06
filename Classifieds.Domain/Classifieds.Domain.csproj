@@ -77,37 +77,13 @@
     <Compile Include="Entities\Item.cs" />
     <Compile Include="Entities\Picture.cs" />
     <Compile Include="Entities\Section.cs" />
-    <Compile Include="Migrations\201311271525136_InitialCreate.cs" />
-    <Compile Include="Migrations\201311271525136_InitialCreate.Designer.cs">
-      <DependentUpon>201311271525136_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201401040343590_test.cs" />
+    <Compile Include="Migrations\201401040343590_test.Designer.cs">
+      <DependentUpon>201401040343590_test.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201311271527478_initial.cs" />
-    <Compile Include="Migrations\201311271527478_initial.Designer.cs">
-      <DependentUpon>201311271527478_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201311291740583_AddCurrencyDetails.cs" />
-    <Compile Include="Migrations\201311291740583_AddCurrencyDetails.Designer.cs">
-      <DependentUpon>201311291740583_AddCurrencyDetails.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201312090200187_itemType.cs" />
-    <Compile Include="Migrations\201312090200187_itemType.Designer.cs">
-      <DependentUpon>201312090200187_itemType.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201312091932346_test1.cs" />
-    <Compile Include="Migrations\201312091932346_test1.Designer.cs">
-      <DependentUpon>201312091932346_test1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201312102356306_test11.cs" />
-    <Compile Include="Migrations\201312102356306_test11.Designer.cs">
-      <DependentUpon>201312102356306_test11.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201312110047145_test2.cs" />
-    <Compile Include="Migrations\201312110047145_test2.Designer.cs">
-      <DependentUpon>201312110047145_test2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201312212304130_FeatureType-Values.cs" />
-    <Compile Include="Migrations\201312212304130_FeatureType-Values.Designer.cs">
-      <DependentUpon>201312212304130_FeatureType-Values.cs</DependentUpon>
+    <Compile Include="Migrations\201401050741454_nullable.cs" />
+    <Compile Include="Migrations\201401050741454_nullable.Designer.cs">
+      <DependentUpon>201401050741454_nullable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -125,33 +101,15 @@
     <Folder Include="DataBase\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201311271525136_InitialCreate.resx">
-      <DependentUpon>201311271525136_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201311271527478_initial.resx">
-      <DependentUpon>201311271527478_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201311291740583_AddCurrencyDetails.resx">
-      <DependentUpon>201311291740583_AddCurrencyDetails.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201312090200187_itemType.resx">
-      <DependentUpon>201312090200187_itemType.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201312091932346_test1.resx">
-      <DependentUpon>201312091932346_test1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201312102356306_test11.resx">
-      <DependentUpon>201312102356306_test11.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201312110047145_test2.resx">
-      <DependentUpon>201312110047145_test2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201312212304130_FeatureType-Values.resx">
-      <DependentUpon>201312212304130_FeatureType-Values.cs</DependentUpon>
-    </EmbeddedResource>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <EmbeddedResource Include="Migrations\201401040343590_test.resx">
+      <DependentUpon>201401040343590_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401050741454_nullable.resx">
+      <DependentUpon>201401050741454_nullable.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

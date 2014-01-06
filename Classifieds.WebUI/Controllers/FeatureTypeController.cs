@@ -56,15 +56,12 @@ namespace Classifieds.WebUI.Controllers
         [HttpPost]
         public ActionResult Create(FeatureTypeViewModel featureType)
         {
-            if (ModelState.IsValid)
-            {
-                featureType.SetRepositories(unitOfWork);
-                unitOfWork.FeatureTypeRepository.Insert(featureType.ToModel());
+            if (!ModelState.IsValid) return View(featureType);
 
-                return RedirectToAction("Index");
-            }
-
-            return View(featureType);
+            featureType.SetRepositories(unitOfWork);
+            unitOfWork.FeatureTypeRepository.Insert(featureType.ToModel());
+            unitOfWork.Save();
+            return RedirectToAction("Index");
         }
 
         //

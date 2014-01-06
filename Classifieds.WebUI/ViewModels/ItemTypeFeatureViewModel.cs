@@ -19,10 +19,10 @@ namespace Classifieds.WebUI.ViewModels
             foreach (var item in Sections)
             {
                 item.Features = item.Features
-                    .Where(f => f.ItemTypes.Any(i => i.Id == myItemTypeId))
+                    .Where(f => f.ItemTypes.Any(i => i.Id == myItemTypeId)).OrderBy(p => p.Order)
                     .ToList();
             }
-            Sections = Sections.Where(s => s.Features.Count() > 0).ToList();
+            Sections = Sections.Where(s => s.Features.Any()).ToList();
         }
     }
 }
