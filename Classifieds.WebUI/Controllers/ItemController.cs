@@ -9,11 +9,11 @@ namespace Classifieds.WebUI.Controllers
 {
     public class ItemController : Controller
     {
-        private IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork unitOfWork;
 
         public ItemController(IUnitOfWork myUnitOfWork)
         {
-            this.unitOfWork = myUnitOfWork;
+            unitOfWork = myUnitOfWork;
         }
 
         //
@@ -61,11 +61,7 @@ namespace Classifieds.WebUI.Controllers
                 unitOfWork.Save();
                 return RedirectToAction("Index");
             }
-            else
-            {
-                return View(item);
-            }
-
+            return View(item);
         }
 
         //

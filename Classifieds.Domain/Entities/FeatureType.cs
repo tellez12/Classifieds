@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.Design;
 using Classifieds.Domain.Utils;
 
 namespace Classifieds.Domain.Entities
@@ -25,5 +26,10 @@ namespace Classifieds.Domain.Entities
         public Section Section { get; set; }
         public virtual List<ItemType> ItemTypes { set; get; }
         public virtual List<FeatureTypeValue> Values { set; get; }
+        public int? ParentTypeId { get; set; }
+
+        [ForeignKey("ParentTypeId")]
+        public virtual FeatureType ParentType { get; set; }
+
     }
 }

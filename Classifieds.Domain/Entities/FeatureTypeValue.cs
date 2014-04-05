@@ -13,5 +13,10 @@ namespace Classifieds.Domain.Entities
 
         [ForeignKey("TypeId")]
         public FeatureType Type { get; set; }
+
+        public int? ParentValueId { get; set; }
+
+        [ForeignKey("ParentValueId")]
+        public FeatureTypeValue ParentValue { get; set; }
     }
 }
